@@ -33,13 +33,6 @@ under the License.
       <activemq.basedir>${project.basedir}/../../../../..</activemq.basedir>
    </properties>
 
-   <repositories>
-      <repository>
-         <id>jboss</id>
-         <url>http://repository.jboss.org/nexus/content/groups/public/</url>
-      </repository>
-   </repositories>
-
    <profiles>
       <profile>
          <id>example</id>

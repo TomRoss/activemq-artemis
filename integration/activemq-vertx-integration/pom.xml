@@ -68,13 +68,6 @@
     <maven.dependency.plugin.version>2.7</maven.dependency.plugin.version>
   </properties>
 
-  <repositories>
-    <repository>
-      <id>sonatype-nexus-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/public</url>
-    </repository>
-  </repositories>
-
   <dependencies>
      <dependency>
         <groupId>org.jboss.logging</groupId>

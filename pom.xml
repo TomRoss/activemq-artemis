@@ -473,35 +473,6 @@
       </dependencies>
    </dependencyManagement>
 
-   <repositories>
-      <repository>
-         <snapshots>
-            <enabled>false</enabled>
-            <updatePolicy>never</updatePolicy>
-         </snapshots>
-         <releases>
-            <enabled>true</enabled>
-            <updatePolicy>interval:10080</updatePolicy>
-         </releases>
-         <id>jboss.release</id>
-         <name>JBoss releases</name>
-         <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-      </repository>
-      <repository>
-         <snapshots>
-            <enabled>false</enabled>
-            <updatePolicy>never</updatePolicy>
-         </snapshots>
-         <releases>
-            <enabled>true</enabled>
-            <updatePolicy>interval:10080</updatePolicy>
-         </releases>
-         <id>jboss.thirdparty.release</id>
-         <name>JBoss third party releases</name>
-         <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/</url>
-      </repository>
-   </repositories>
-
    <profiles>
        <profile>
            <id>M2E</id>
