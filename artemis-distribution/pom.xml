@@ -129,8 +129,15 @@
       </dependency>
       <dependency>
          <groupId>org.apache.activemq</groupId>
-         <artifactId>artemis-native</artifactId>
-         <version>${project.version}</version>
+         <artifactId>libartemis-native-32</artifactId>
+         <version>${version.org.apache.activemq.libartemis-native-32}</version>
+         <type>so</type>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.activemq</groupId>
+         <artifactId>libartemis-native-64</artifactId>
+         <version>${version.org.apache.activemq.libartemis-native-64}</version>
+         <type>so</type>
       </dependency>
       <dependency>
          <groupId>org.apache.activemq</groupId>
