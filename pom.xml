@@ -142,6 +142,11 @@
       <javac-compiler-id>javac-with-errorprone</javac-compiler-id>
 
       <directory-version>1.5.7</directory-version>
+      
+      <version.org.apache.activemq.libartemis-native>${project.version}</version.org.apache.activemq.libartemis-native>
+      <version.org.apache.activemq.libartemis-native-32>${version.org.apache.activemq.libartemis-native}</version.org.apache.activemq.libartemis-native-32>
+      <version.org.apache.activemq.libartemis-native-64>${version.org.apache.activemq.libartemis-native}</version.org.apache.activemq.libartemis-native-64>
+      
    </properties>
 
    <scm>
