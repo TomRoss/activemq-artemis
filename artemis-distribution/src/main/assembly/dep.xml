@@ -105,7 +105,8 @@
       <!-- native -->
       <dependencySet>
          <includes>
-            <include>org.apache.activemq:artemis-native</include>
+            <include>org.apache.activemq:libartemis-native-64</include>
+            <include>org.apache.activemq:libartemis-native-32</include>
          </includes>
          <outputDirectory>bin</outputDirectory>
          <unpack>true</unpack>
