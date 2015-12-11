@@ -64,8 +64,9 @@ public class LibaioContext<Callback extends SubmitInfo> implements Closeable {
    private static boolean loadLibrary(final String name) {
       try {
          System.loadLibrary(name);
-         if (getNativeVersion() != EXPECTED_NATIVE_VERSION) {
-            NativeLogger.LOGGER.incompatibleNativeLibrary();
+         int version = getNativeVersion();
+         if (version != EXPECTED_NATIVE_VERSION) {
+            NativeLogger.LOGGER.incompatibleNativeLibrary(version, EXPECTED_NATIVE_VERSION);
             return false;
          }
          else {
