@@ -116,7 +116,7 @@
 
    <properties>
       <activemq.basedir>${project.basedir}/..</activemq.basedir>
-      <version.org.apache.activemq.libartemis-native>1.1.0-redhat-1</version.org.apache.activemq.libartemis-native>
+      <version.org.apache.activemq.libartemis-native>1.1.0-redhat-2</version.org.apache.activemq.libartemis-native>
       <version.org.apache.activemq.libartemis-native-32>${version.org.apache.activemq.libartemis-native}</version.org.apache.activemq.libartemis-native-32>
       <version.org.apache.activemq.libartemis-native-64>${version.org.apache.activemq.libartemis-native}</version.org.apache.activemq.libartemis-native-64>
    </properties>
