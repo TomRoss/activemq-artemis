@@ -45,6 +45,6 @@ public interface NativeLogger extends BasicLogger {
    NativeLogger LOGGER = Logger.getMessageLogger(NativeLogger.class, NativeLogger.class.getPackage().getName());
 
    @LogMessage(level = Logger.Level.WARN)
-   @Message(id = 143001, value = "You have a native library with a different version than expected", format = Message.Format.MESSAGE_FORMAT)
-   void incompatibleNativeLibrary();
+   @Message(id = 143001, value = "You have a native library with a different version '%s' than expected '%s'")
+   void incompatibleNativeLibrary(int versionFound, int versionExpected);
 }
