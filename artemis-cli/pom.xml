@@ -69,7 +69,6 @@
          <groupId>io.airlift</groupId>
          <artifactId>airline</artifactId>
       </dependency>
-<!-- windows platform dependent test dependency
       <dependency>
          <groupId>org.apache.commons</groupId>
          <artifactId>commons-configuration2</artifactId>
@@ -80,6 +79,7 @@
          <artifactId>commons-lang3</artifactId>
          <version>${commons.lang.version}</version>
       </dependency>
+<!-- windows platform dependent test dependency
       <dependency>
         <groupId>com.sun.winsw</groupId>
         <artifactId>winsw</artifactId>
