@@ -67,6 +67,7 @@
          <groupId>io.airlift</groupId>
          <artifactId>airline</artifactId>
       </dependency>
+<!-- windows platform dependent test dependency
       <dependency>
         <groupId>com.sun.winsw</groupId>
         <artifactId>winsw</artifactId>
@@ -75,6 +76,7 @@
         <type>exe</type>
         <scope>test</scope>
       </dependency>
+-->
       <dependency>
          <groupId>junit</groupId>
          <artifactId>junit</artifactId>
@@ -118,6 +120,7 @@
      </resources>
 
      <plugins>
+<!-- windows platform dependent test dependency
        <plugin>
          <groupId>org.apache.maven.plugins</groupId>
          <artifactId>maven-dependency-plugin</artifactId>
@@ -145,6 +148,7 @@
            </execution>
          </executions>
        </plugin>
+-->
      </plugins>
    </build>
 
