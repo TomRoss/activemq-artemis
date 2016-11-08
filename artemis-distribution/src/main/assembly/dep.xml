@@ -109,7 +109,7 @@
             <include>org.apache.activemq:libartemis-native-32</include>
          </includes>
          <outputDirectory>bin</outputDirectory>
-         <unpack>true</unpack>
+         <unpack>false</unpack>
          <unpackOptions>
             <includes>
                <include>**/*.so</include>
