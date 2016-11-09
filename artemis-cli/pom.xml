@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -20,7 +21,7 @@
    <parent>
       <groupId>org.apache.activemq</groupId>
       <artifactId>artemis-pom</artifactId>
-      <version>1.5.0</version>
+      <version>1.5.0.redhat-1</version>
    </parent>
 
    <artifactId>artemis-cli</artifactId>
@@ -139,46 +140,6 @@
          </includes>
        </resource>
      </resources>
-
-     <plugins>
-<!-- windows platform dependent test dependency
-       <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-dependency-plugin</artifactId>
-         <version>2.2</version>
-         <executions>
-           <execution>
-             <id>unpack</id>
-             <phase>process-resources</phase>
-             <goals>
-               <goal>copy</goal>
-             </goals>
-             <configuration>
-               <artifactItems>
-                 <artifactItem>
-                   <groupId>com.sun.winsw</groupId>
-                   <artifactId>winsw</artifactId>
-                   <version>${winsw.version}</version>
-                   <classifier>bin</classifier>
-                   <type>exe</type>
-                   <outputDirectory>${basedir}/target/classes/org/apache/activemq/artemis/cli/commands/bin/</outputDirectory>
-                   <destFileName>artemis-service.exe</destFileName>
-                 </artifactItem>
-               </artifactItems>
-             </configuration>
-           </execution>
-         </executions>
-       </plugin>
--->
-     </plugins>
    </build>
-
-   <repositories>
-      <repository>
-         <id>jenkins</id>
-         <name>jenkins</name>
-         <url>http://repo.jenkins-ci.org/releases/</url>
-      </repository>
-   </repositories>
 
 </project>
