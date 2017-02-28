@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -18,7 +19,7 @@
    <parent>
       <artifactId>artemis-protocols</artifactId>
       <groupId>org.apache.activemq</groupId>
-      <version>1.5.3.jbossorg-003</version>
+      <version>1.5.3.003-redhat-1</version>
    </parent>
    <modelVersion>4.0.0</modelVersion>
 
@@ -77,12 +78,10 @@
             <configuration>
                <instructions>
                   <Embed-Dependency>activemq-client</Embed-Dependency>
-                  <Import-Package>
-                     !org.apache.commons.net.ftp,
+                  <Import-Package>!org.apache.commons.net.ftp,
                      !javax.jmdns,
                      javax.jms;version="[2,3)",
-                     *
-                  </Import-Package>
+                     *</Import-Package>
                </instructions>
             </configuration>
          </plugin>
