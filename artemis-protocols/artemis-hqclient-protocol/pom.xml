@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -18,7 +19,7 @@
    <parent>
       <artifactId>artemis-protocols</artifactId>
       <groupId>org.apache.activemq</groupId>
-      <version>1.5.4.jbossorg-004</version>
+      <version>1.5.4.004-redhat-1</version>
    </parent>
    <modelVersion>4.0.0</modelVersion>
 
@@ -60,9 +61,7 @@
             <version>3.0.0</version>
             <extensions>true</extensions>
             <configuration>
-               <instructions>
-                  <!-- 						<Bundle-Activator>org.apache.activemq.artemis.core.protocol.hornetq.Activator</Bundle-Activator> -->
-               </instructions>
+               <instructions></instructions>
             </configuration>
          </plugin>
       </plugins>
