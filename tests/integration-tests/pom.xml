@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -19,7 +20,7 @@
    <parent>
       <groupId>org.apache.activemq.tests</groupId>
       <artifactId>artemis-tests-pom</artifactId>
-      <version>1.5.5.jbossorg-001</version>
+      <version>1.5.5.001-redhat-1</version>
    </parent>
 
    <artifactId>integration-tests</artifactId>
@@ -33,16 +34,6 @@
       <vertx.version>2.1.6</vertx.version>
       <vertx.testtools.version>2.0.3-final</vertx.testtools.version>
    </properties>
-
-   <repositories>
-       <!-- for the paho dependency -->
-       <repository>
-           <id>eclipse.m2</id>
-           <url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
-           <releases><enabled>true</enabled></releases>
-           <snapshots><enabled>false</enabled></snapshots>
-       </repository>
-   </repositories>
 
 
    <dependencies>
@@ -355,7 +346,7 @@
       <dependency>
          <groupId>org.apache.activemq.rest</groupId>
          <artifactId>artemis-rest</artifactId>
-         <version>1.5.5.jbossorg-001</version>
+         <version>1.5.5.001-redhat-1</version>
          <scope>compile</scope>
       </dependency>
 
