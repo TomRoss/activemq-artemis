@@ -55,6 +55,7 @@
       <module>integration/activemq-aerogear-integration</module>
       <module>integration/activemq-vertx-integration</module>
       <module>artemis-distribution</module>
+      <module>artemis-features</module>
       <module>tests</module>
    </modules>
 
