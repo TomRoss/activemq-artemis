@@ -20,7 +20,7 @@
    <groupId>org.apache.activemq</groupId>
    <artifactId>artemis-pom</artifactId>
    <packaging>pom</packaging>
-   <version>1.5.5.jbossorg-011</version>
+   <version>1.5.5.011-redhat-1</version>
 
    <parent>
       <groupId>org.apache</groupId>
@@ -151,8 +151,7 @@
       <activemq-surefire-argline>-Djava.util.logging.manager=org.jboss.logmanager.LogManager
          -Dlogging.configuration="file:${activemq.basedir}/tests/config/logging.properties"
          -Djava.library.path="${activemq.basedir}/artemis-native/bin" -Djgroups.bind_addr=localhost -Dorg.apache.activemq.artemis.api.core.UDPBroadcastEndpointFactory.localBindAddress=localhost
-         -Djava.net.preferIPv4Stack=true
-      </activemq-surefire-argline>
+         -Djava.net.preferIPv4Stack=true</activemq-surefire-argline>
       <activemq.basedir>${project.basedir}</activemq.basedir>
       <skipLicenseCheck>true</skipLicenseCheck>
       <skipStyleCheck>true</skipStyleCheck>
@@ -990,8 +989,7 @@
                -Dlogging.configuration="file:${activemq.basedir}/tests/config/logging.properties"
                -Djava.library.path="${activemq.basedir}/artemis-native/bin" -Djgroups.bind_addr=localhost -Dorg.apache.activemq.artemis.api.core.UDPBroadcastEndpointFactory.localBindAddress=localhost
                -Djava.net.preferIPv4Stack=true -Dbasedir=${basedir}
-               @{jacoco.agent} -Djacoco.agent=@{jacoco.agent}
-            </activemq-surefire-argline>
+               @{jacoco.agent} -Djacoco.agent=@{jacoco.agent}</activemq-surefire-argline>
          </properties>
          <build>
             <plugins>
@@ -1074,61 +1072,61 @@
                         <inherited>false</inherited>
                         <configuration>
                            <target>
-                              <property name="result.report.dir" location="target/jacoco-report"/>
+                              <property name="result.report.dir" location="target/jacoco-report"></property>
                               <taskdef name="report" classname="org.jacoco.ant.ReportTask">
-                                 <classpath path="${project.build.directory}/jacoco-jars/org.jacoco.ant.jar"/>
+                                 <classpath path="${project.build.directory}/jacoco-jars/org.jacoco.ant.jar"></classpath>
                               </taskdef>
                               <echo>Creating JaCoCo ActiveMQ Artemis test coverage reports...</echo>
                               <report>
                                  <executiondata>
                                     <fileset dir="${basedir}">
-                                       <include name="**/target/jacoco.exec"/>
+                                       <include name="**/target/jacoco.exec"></include>
                                     </fileset>
                                  </executiondata>
                                  <structure name="JaCoCo ActiveMQ Artemis">
                                     <classfiles>
-                                       <fileset dir="${activemq.basedir}/artemis-boot/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-cdi-client/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-cli/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-commons/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-core-client/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-dto/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-jdbc-store/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-jms-client/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-jms-server/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-journal/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-native/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-ra/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-rest/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-selector/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-server/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-server-osgi/target/classes"/>
-                                       <fileset dir="${activemq.basedir}/artemis-service-extensions/target"/>
-                                       <fileset dir="${activemq.basedir}/artemis-web/target/classes"/>
+                                       <fileset dir="${activemq.basedir}/artemis-boot/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-cdi-client/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-cli/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-commons/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-core-client/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-dto/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-jdbc-store/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-jms-client/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-jms-server/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-journal/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-native/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-ra/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-rest/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-selector/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-server/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-server-osgi/target/classes"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-service-extensions/target"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-web/target/classes"></fileset>
                                     </classfiles>
                                     <sourcefiles encoding="UTF-8">
-                                       <fileset dir="${activemq.basedir}/artemis-boot/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-cdi-client/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-cli/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-commons/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-core-client/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-dto/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-jdbc-store/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-jms-client/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-jms-server/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-journal/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-native/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-ra/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-rest/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-selector/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-server/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-server-osgi/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-service-extensions/src/main/java"/>
-                                       <fileset dir="${activemq.basedir}/artemis-web/src/main/java"/>
+                                       <fileset dir="${activemq.basedir}/artemis-boot/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-cdi-client/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-cli/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-commons/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-core-client/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-dto/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-jdbc-store/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-jms-client/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-jms-server/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-journal/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-native/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-ra/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-rest/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-selector/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-server/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-server-osgi/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-service-extensions/src/main/java"></fileset>
+                                       <fileset dir="${activemq.basedir}/artemis-web/src/main/java"></fileset>
                                     </sourcefiles>
                                  </structure>
-                                 <html destdir="\${result.report.dir}"/>
-                                 <xml destfile="\${result.report.dir}/report.xml"/>
+                                 <html destdir="\${result.report.dir}"></html>
+                                 <xml destfile="\${result.report.dir}/report.xml"></xml>
                               </report>
                            </target>
                         </configuration>
@@ -1167,28 +1165,20 @@
 									</goals>
 								</pluginExecutionFilter>
 								<action>
-									<ignore />
+									<ignore></ignore>
 								</action>
 							</pluginExecution>
 							<pluginExecution>
 								<pluginExecutionFilter>
-									<groupId>
-										org.apache.servicemix.tooling
-									</groupId>
-									<artifactId>
-										depends-maven-plugin
-									</artifactId>
-									<versionRange>
-										[1.2,)
-									</versionRange>
+									<groupId>org.apache.servicemix.tooling</groupId>
+									<artifactId>depends-maven-plugin</artifactId>
+									<versionRange>[1.2,)</versionRange>
 									<goals>
-										<goal>
-											generate-depends-file
-										</goal>
+										<goal>generate-depends-file</goal>
 									</goals>
 								</pluginExecutionFilter>
 								<action>
-									<ignore />
+									<ignore></ignore>
 								</action>
 							</pluginExecution>
 						</pluginExecutions>
@@ -1369,7 +1359,6 @@
             <plugin>
                <groupId>org.codehaus.mojo</groupId>
                <artifactId>cobertura-maven-plugin</artifactId>
-               <configuration />
                <executions>
                   <execution>
                      <goals>
@@ -1568,90 +1557,62 @@
                </execution>
             </executions>
          </plugin>
+         <plugin>
+        <groupId>org.commonjava.maven.plugins</groupId>
+        <artifactId>project-sources-maven-plugin</artifactId>
+        <version>0.3</version>
+        <executions>
+          <execution>
+            <id>project-sources-archive</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>archive</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+         <plugin>
+        <groupId>com.redhat.rcm.maven.plugin</groupId>
+        <artifactId>buildmetadata-maven-plugin</artifactId>
+        <version>1.7.0</version>
+        <executions>
+          <execution>
+            <id>build-metadata</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>provide-buildmetadata</goal>
+            </goals>
+            <configuration>
+              <addToLocations>
+                <addToLocation>${session.executionRootDirectory}</addToLocation>
+              </addToLocations>
+              <activateOutputFileMapping>true</activateOutputFileMapping>
+              <addBuildDateInfo>false</addBuildDateInfo>
+              <addLocallyModifiedTagToFullVersion>false</addLocallyModifiedTagToFullVersion>
+              <addHostInfo>false</addHostInfo>
+              <addJavaRuntimeInfo>true</addJavaRuntimeInfo>
+              <addToFilters>false</addToFilters>
+              <validateCheckout>false</validateCheckout>
+              <addOsInfo>false</addOsInfo>
+              <hideJavaOptsInfo>false</hideJavaOptsInfo>
+              <forceNewProperties>true</forceNewProperties>
+              <hideCommandLineInfo>false</hideCommandLineInfo>
+              <addBuildDateToFullVersion>false</addBuildDateToFullVersion>
+              <createPropertiesReport>true</createPropertiesReport>
+              <addToGeneratedSources>false</addToGeneratedSources>
+              <createXmlReport>false</createXmlReport>
+              <propertiesOutputFile>build.metadata</propertiesOutputFile>
+              <addMavenExecutionInfo>false</addMavenExecutionInfo>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 
       </plugins>
    </build>
 
-   <reporting>
-      <plugins>
-         <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>cobertura-maven-plugin</artifactId>
-            <version>2.5.2</version>
-            <configuration>
-               <check />
-               <formats>
-                  <format>html</format>
-                  <format>xml</format>
-               </formats>
-            </configuration>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>2.17</version>
-            <configuration>
-               <configLocation>${activemq.basedir}/etc/checkstyle.xml</configLocation>
-               <suppressionsLocation>${activemq.basedir}/etc/checkstyle-suppressions.xml</suppressionsLocation>
-               <failsOnError>false</failsOnError>
-            </configuration>
-         </plugin>
-         <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <version>2.5.2</version>
-            <configuration>
-               <excludeFilterFile>${user.dir}/etc/findbugs-exclude.xml</excludeFilterFile>
-               <effort>Max</effort>
-               <failOnError>false</failOnError>
-            </configuration>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.9</version>
-            <configuration>
-               <minmemory>128m</minmemory>
-               <maxmemory>1024m</maxmemory>
-               <quiet>false</quiet>
-               <!-- XXX FIXME 'aggregate' is deprecated -->
-               <aggregate>true</aggregate>
-               <excludePackageNames>com.restfully.*:org.jboss.resteasy.examples.*:org.jboss.resteasy.tests.*
-               </excludePackageNames>
-            </configuration>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>2.7</version>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-report-plugin</artifactId>
-            <version>2.14.1</version>
-         </plugin>
-         <plugin>
-            <groupId>org.owasp</groupId>
-            <artifactId>dependency-check-maven</artifactId>
-            <version>${owasp.version}</version>
-            <reportSets>
-               <reportSet>
-                  <reports>
-                     <report>aggregate</report>
-                  </reports>
-               </reportSet>
-            </reportSets>
-         </plugin>
-
-      </plugins>
-   </reporting>
-
-   <pluginRepositories>
-      <pluginRepository>
-          <id>sevntu-maven</id>
-          <name>sevntu-maven</name>
-          <url>http://sevntu-checkstyle.github.io/sevntu.checkstyle/maven2</url>
-      </pluginRepository>
-   </pluginRepositories>
-
 </project>
+<!--
+Modified by POM Manipulation Extension for Maven 2.3.1 ( SHA: f64d03ba ) 
+-->
+
