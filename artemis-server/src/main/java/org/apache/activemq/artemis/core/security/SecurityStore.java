@@ -28,5 +28,7 @@ public interface SecurityStore {
 
    boolean isSecurityEnabled();
 
+   void setSecurityEnabled(boolean securityEnabled);
+
    void stop();
 }
