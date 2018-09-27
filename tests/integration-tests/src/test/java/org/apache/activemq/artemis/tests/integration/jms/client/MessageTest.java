@@ -26,6 +26,7 @@ import javax.jms.Session;
 import javax.jms.StreamMessage;
 
 import org.apache.activemq.artemis.api.jms.ActiveMQJMSClient;
+import org.apache.activemq.artemis.reader.MessageUtil;
 import org.apache.activemq.artemis.tests.integration.IntegrationTestLogger;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Assert;
@@ -190,6 +191,10 @@ public class MessageTest extends JMSTestBase {
       msg.setStringProperty("Test", null);
 
       assertEquals(null, msg.getStringProperty("Test"));
+
+      msg.setObjectProperty(MessageUtil.JMSXGROUPID, null);
+
+      msg.setObjectProperty(MessageUtil.JMSXUSERID, null);
 
       msg.setObjectProperty(MessageTest.propName1, null);
 
