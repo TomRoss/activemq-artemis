@@ -183,4 +183,6 @@ public interface PagingStore extends ActiveMQComponent {
     * This method will re-enable cleanup of pages. Notice that it will also start cleanup threads.
     */
    void enableCleanup();
+
+   void destroy() throws Exception;
 }
