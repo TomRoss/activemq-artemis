@@ -21,7 +21,7 @@
    <parent>
       <groupId>org.apache.activemq</groupId>
       <artifactId>artemis-pom</artifactId>
-      <version>1.5.5.014-redhat-00001</version>
+      <version>1.5.5.014-redhat-jbeap-16027</version>
    </parent>
 
    <artifactId>artemis-maven-plugin</artifactId>
