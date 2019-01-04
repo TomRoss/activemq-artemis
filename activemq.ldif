@@ -1,0 +1,158 @@
+## general
+dn: o=ActiveMQ,ou=system
+objectclass: organization
+objectclass: top
+o: ActiveMQ
+
+dn: ou=users,o=ActiveMQ,ou=system
+objectclass: organizationalUnit
+objectclass: top
+ou: users
+
+dn: ou=destinations,o=ActiveMQ,ou=system
+objectclass: organizationalUnit
+objectclass: top
+ou: destinations
+
+dn: ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: organizationalUnit
+objectclass: top
+ou: queues
+
+dn: ou=topics,ou=destinations,o=ActiveMQ,ou=system
+objectclass: organizationalUnit
+objectclass: top
+ou: topics
+
+dn: ou=roles,o=ActiveMQ,ou=system
+objectclass: organizationalUnit
+objectclass: top
+ou: roles
+
+## roles
+
+dn: cn=user-one,ou=roles,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+cn: user-one
+member: uid=userOne,ou=system
+
+dn: cn=user-two,ou=roles,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+cn: user-two
+member: uid=userTwo,ou=system
+
+
+dn: cn=user-three,ou=roles,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+cn: user-three
+member: uid=userThree,ou=system
+
+dn: cn=admin,ou=roles,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+cn: admin
+member: uid=quickuser,ou=system
+
+
+## users
+dn: uid=quickuser,ou=users,o=ActiveMQ,ou=system
+uid: quickuser
+userPassword: quick123+
+objectClass: account
+objectClass: simpleSecurityObject
+objectClass: top
+
+dn: uid=userOne,ou=users,o=ActiveMQ,ou=system
+uid: userOne
+userPassword: secret
+objectClass: account
+objectClass: simpleSecurityObject
+objectClass: top
+
+dn: uid=userTwo,ou=users,o=ActiveMQ,ou=system
+uid: userTwo
+userPassword: secret
+objectClass: account
+objectClass: simpleSecurityObject
+objectClass: top
+
+dn: uid=userThree,ou=users,o=ActiveMQ,ou=system
+uid: userThree
+userPassword: secret
+objectClass: account
+objectClass: simpleSecurityObject
+objectClass: top
+
+## destinations
+dn: uid=testQueue,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: applicationProcess
+objectclass: uidObject
+objectclass: top
+uid: testQueue
+cn: testQueue
+
+dn: uid=queueOne,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: applicationProcess
+objectclass: uidObject
+objectclass: top
+uid: queueOne
+cn: queueOne
+
+dn: uid=queueTwo,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: applicationProcess
+objectclass: uidObject
+objectclass: top
+uid: queueTwo
+cn: queueTwo
+
+dn: uid=queueThree,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: applicationProcess
+objectclass: uidObject
+objectclass: top
+uid: queueThree
+cn: queueThree
+
+## permissions
+
+dn: cn=read,uid=testQueue,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: read
+uniquemember: uid=admin
+
+dn: cn=write,uid=testQueue,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: write
+uniquemember: uid=admin
+
+dn: cn=read,uid=queueOne,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: read
+uniquemember: uid=user-one
+
+dn: cn=write,uid=queueOne,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: write
+uniquemember: uid=user-one
+
+dn: cn=read,uid=queueTwo,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: read
+uniquemember: uid=user-two
+
+dn: cn=write,uid=queueTwo,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: write
+uniquemember: uid=user-two
+
+
+
+
