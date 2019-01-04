@@ -1,0 +1,203 @@
+##########################
+## Define basic objects ##
+##########################
+
+dn: o=ActiveMQ,ou=system
+objectclass: organization
+objectclass: top
+o: ActiveMQ
+
+
+###################
+## Define groups ##
+###################
+
+
+dn: ou=Group,o=ActiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: Group
+
+dn: cn=admins,ou=Group,o=ActiveMQ,ou=system
+cn: admins
+member: uid=admin,ou=User,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+
+dn: cn=users,ou=Group,o=ActiveMQ,ou=system
+cn: users
+member: uid=quickuser,ou=User,o=ActiveMQ,ou=system
+member: uid=userOne,ou=User,o=ActiveMQ,ou=system
+member: uid=userTwo,ou=User,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+
+
+##################
+## Define users ##
+##################
+
+
+dn: ou=User,o=ActiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: User
+
+dn: uid=admin,ou=User,o=ActiveMQ,ou=system
+uid: admin
+userPassword: admin
+objectClass: account
+objectClass: simpleSecurityObject
+objectClass: top
+
+
+dn: uid=quickuser,ou=User,o=ActiveMQ,ou=system
+uid: quickuser
+userPassword: quick123+
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: Quick User
+sn: User
+
+dn: uid=userOne,ou=User,o=ActiveMQ,ou=system
+uid: userOne
+userPassword: userone
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: User One
+sn: One
+
+dn: uid=userTwo,ou=User,o=ActiveMQ,ou=system
+uid: userTwo
+userPassword: usertwo
+objectclass: inetOrgPerson
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+cn: User Two
+sn: Two
+
+########################
+## Define destiations ##
+########################
+
+dn: ou=destinations,o=ActiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: Destination
+
+dn: ou=topic,ou=destinations,o=ActiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: topic
+
+dn: ou=queue,ou=destinations,o=ActiveMQ,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: queue
+
+## testQueue
+
+dn: uid=testQueue,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+objectclass: applicationProcess
+objectclass: uidObject
+objectclass: top
+uid: testQueue
+cn: testQueue
+
+## queueOne
+
+dn: uid=queueOne,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+objectclass: applicationProcess
+objectclass: uidObject
+objectclass: top
+uid: queueOne
+cn: queueOne
+
+## testTopic
+
+dn: uid=testTopic,ou=topic,ou=destinations,o=ActiveMQ,ou=system
+objectclass: applicationProcess
+objectclass: uidObject
+objectclass: top
+uid: testTopic
+cn: testTopic
+
+############
+## Roles  ##
+############
+dn: cn=admin,uid=queueOne,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: read
+uniquemember: uid=users
+
+dn: cn=read,uid=queueOne,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: read
+uniquemember: uid=users
+
+dn: cn=write,uid=queueOne,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: write
+uniquemember: uid=users
+
+
+## test.>
+
+dn: cn=test.$,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+cn: test.$
+description: A queue
+objectClass: applicationProcess
+objectClass: top
+
+dn: cn=admin,cn=test.$,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+cn: admin
+description: Admin privilege group, members are roles
+member: cn=admins,ou=Group,o=ActiveMQ,ou=system
+member: cn=users,ou=Group,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+
+dn: cn=read,cn=test.$,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+cn: read
+member: cn=users,ou=Group,o=ActiveMQ,ou=system
+member: cn=admins,ou=Group,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+
+dn: cn=write,cn=test.$,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+cn: write
+objectClass: groupOfNames
+objectClass: top
+member: cn=users,ou=Group,o=ActiveMQ,ou=system
+member: cn=admins,ou=Group,o=ActiveMQ,ou=system
+
+## testQueue
+
+dn: cn=read,uid=testQueue,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+cn: read
+member: cn=users,ou=Group,o=ActiveMQ,ou=system
+member: cn=admins,ou=Group,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+
+dn: cn=write,uid=testQueue,ou=queue,ou=destinations,o=ActiveMQ,ou=system
+cn: write
+objectClass: groupOfNames
+objectClass: top
+member: cn=users,ou=Group,o=ActiveMQ,ou=system
+member: cn=admins,ou=Group,o=ActiveMQ,ou=system
+
+
+
+
+
+
+
