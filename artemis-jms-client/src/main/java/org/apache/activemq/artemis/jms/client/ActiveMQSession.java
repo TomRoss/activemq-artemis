@@ -1042,6 +1042,11 @@ public class ActiveMQSession implements QueueSession, TopicSession {
       }
    }
 
+   public ActiveMQConnection getConnection(){
+
+      return connection;
+   }
+   
    // Protected -----------------------------------------------------
 
    // Private -------------------------------------------------------
