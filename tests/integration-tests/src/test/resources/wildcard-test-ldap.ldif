@@ -1,4 +1,9 @@
+###############
+##
 ## general
+##
+###############
+
 dn: o=ActiveMQ,ou=system
 objectclass: organization
 objectclass: top
@@ -29,7 +34,11 @@ objectclass: organizationalUnit
 objectclass: top
 ou: roles
 
+##########
+##
 ## roles
+##
+##########
 
 dn: cn=user-one,ou=roles,o=ActiveMQ,ou=system
 objectClass: groupOfNames
@@ -56,8 +65,11 @@ objectClass: top
 cn: admin
 member: uid=quickuser,ou=users,o=ActiveMQ,ou=system
 
-
+##########
+##
 ## users
+##
+##########
 
 #dn: uid=admin,ou=users,o=ActiveMQ,ou=system
 #uid: admin
@@ -128,6 +140,14 @@ objectclass: uidObject
 objectclass: top
 uid: queueThree
 cn: queueThree
+
+dn: uid=test.foo,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+description: Queue test.foo
+objectclass: applicationProcess
+objectclass: uidObject
+objectclass: top
+uid: test.foo
+cn: test.foo
 
 ## permissions
 
@@ -207,6 +227,54 @@ objectclass: groupOfUniqueNames
 objectclass: top
 cn: admin
 uniquemember: uid=admin,ou=roles,o=ActiveMQ,ou=system
+
+## test.foo
+
+#dn: cn=read,uid=test.foo,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+#objectclass: groupOfUniqueNames
+#objectclass: top
+#cn: read
+#uniquemember: uid=admin,ou=roles,o=ActiveMQ,ou=system
+
+#dn: cn=write,uid=test.foo,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+#objectclass: groupOfUniqueNames
+#objectclass: top
+#cn: write
+#uniquemember: uid=admin,ou=roles,o=ActiveMQ,ou=system
+
+#dn: cn=admin,uid=test.foo,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+#objectclass: groupOfUniqueNames
+#objectclass: top
+#cn: admin
+#uniquemember: uid=admin,ou=roles,o=ActiveMQ,ou=system
+
+dn: cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+cn: test.*
+description: a qeuue
+objectClass: applicationProcess
+objectClass: top
+
+dn: cn=admin, cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+cn: admin
+description: Admin privilege group, memebers are roles
+member: cn=admin, uid=admin,ou=roles,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+
+dn: cn=read, cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+cn: read
+description: Admin privilege group, memebers are roles
+member: cn=admin, uid=admin,ou=roles,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+
+dn: cn=write, cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+cn: write
+description: Admin privilege group, memebers are roles
+member: cn=admin, uid=admin,ou=roles,o=ActiveMQ,ou=system
+objectClass: groupOfNames
+objectClass: top
+
 
 
 
