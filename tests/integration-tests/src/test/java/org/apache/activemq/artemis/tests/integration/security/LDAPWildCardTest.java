@@ -439,40 +439,6 @@ public class LDAPWildCardTest extends AbstractLdapTestUnit {
       }
 
 
-      // testing quickuser autocreate destination
-      try {
-
-         cf = locator.createSessionFactory();
-
-         session = cf.createSession("quickuser", "quick123+", false, true, true, false, 0);
-
-         producer = session.createProducer();
-
-         producer.send("test.foo",session.createMessage(true));
-
-         producer.close();
-
-         session.close();
-
-         producer = null;
-
-         session = null;
-
-      } catch (ActiveMQException e) {
-
-         LOG.errorf(e, "Error in test");
-
-         Assert.fail("should not throw exception");
-
-      } finally {
-
-         if ( cf != null) {
-
-            cf.close();
-
-         }
-      }
-
    }
 
    @Test
@@ -692,6 +658,83 @@ public class LDAPWildCardTest extends AbstractLdapTestUnit {
       }
    }
 
+
+   @Test
+   public void wildCardAuthorizationTest() throws Exception {
+      final SimpleString ADDRESS = new SimpleString("address");
+      final SimpleString DURABLE_QUEUE = new SimpleString("durableQueue");
+      /*Map<String, String> options = new HashMap<>();
+
+      options.put("connectionProtocol","s");
+      options.put("connectionUsername","uid=admin,ou=system");
+      options.put("connectionURL","ldap://localhost:1024");
+      options.put("connectionPassword","secret");
+      options.put("initialContextFactory","com.sun.jndi.ldap.LdapCtxFactory");
+      options.put("authentication","simple");
+
+      SecuritySettingPlugin securitySettingPlugin = new LegacyLDAPSecuritySettingPlugin().init(options);
+
+      server.getConfiguration().addSecuritySettingPlugin(securitySettingPlugin); */
+
+      server.start();
+
+      ActiveMQServerControl serverControl = server.getActiveMQServerControl();
+
+      //serverControl.createQueue("testQueue","testQueue",true,"MULTICAST");
+
+      serverControl.createQueue("queueOne","queueOne",true,"MULTICAST");
+
+      serverControl.createQueue("queueTwo","qeueueTwo",true,"MULTICAST");
+
+      serverControl.createQueue("queueThree","queueThree",true,"MULTICAST");
+
+      serverControl.createQueue("test.foo","test.foo",true,"MULTICAST");
+
+      String[] addresses = serverControl.getAddressNames();
+
+      // activemq.notification address too
+      Assert.assertTrue(addresses.length == 5);
+
+      ClientSessionFactory cf = null;
+      ClientSession session = null;
+      ClientProducer producer = null;
+      ClientConsumer consumer = null;
+      ClientMessage clientMessage = null;
+      String queueName = "queueOne";
+      // testing quickuser autocreate destination
+      try {
+
+         cf = locator.createSessionFactory();
+
+         session = cf.createSession("quickuser", "quick123+", false, true, true, false, 0);
+
+         producer = session.createProducer();
+
+         producer.send("test.foo",session.createMessage(true));
+
+         producer.close();
+
+         session.close();
+
+         producer = null;
+
+         session = null;
+
+      } catch (ActiveMQException e) {
+
+         LOG.errorf(e, "Error in test");
+
+         Assert.fail("should not throw exception");
+
+      } finally {
+
+         if ( cf != null) {
+
+            cf.close();
+
+         }
+      }
+   }
 
    public void init() {
 
