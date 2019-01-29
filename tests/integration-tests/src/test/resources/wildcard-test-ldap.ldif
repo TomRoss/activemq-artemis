@@ -250,30 +250,27 @@ uniquemember: uid=admin,ou=roles,o=ActiveMQ,ou=system
 
 dn: cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
 cn: test.*
-description: a qeuue
+description: a qeuue test.$ domain
 objectClass: applicationProcess
 objectClass: top
 
-dn: cn=admin, cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
-cn: admin
-description: Admin privilege group, memebers are roles
-member: cn=admin, uid=admin,ou=roles,o=ActiveMQ,ou=system
-objectClass: groupOfNames
-objectClass: top
-
-dn: cn=read, cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+dn: cn=read,cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
 cn: read
-description: Admin privilege group, memebers are roles
-member: cn=admin, uid=admin,ou=roles,o=ActiveMQ,ou=system
-objectClass: groupOfNames
-objectClass: top
+uniquemember: uid=admin,ou=roles,o=ActiveMQ,ou=system
 
-dn: cn=write, cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+dn: cn=write,cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
 cn: write
-description: Admin privilege group, memebers are roles
-member: cn=admin, uid=admin,ou=roles,o=ActiveMQ,ou=system
-objectClass: groupOfNames
-objectClass: top
+uniquemember: uid=admin,ou=roles,o=ActiveMQ,ou=system
+
+dn: cn=admin,cn=test.*,ou=queues,ou=destinations,o=ActiveMQ,ou=system
+objectclass: groupOfUniqueNames
+objectclass: top
+cn: admin
+uniquemember: uid=admin,ou=roles,o=ActiveMQ,ou=system
 
 
 
