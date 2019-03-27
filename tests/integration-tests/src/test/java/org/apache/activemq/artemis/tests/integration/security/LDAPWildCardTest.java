@@ -19,21 +19,28 @@ package org.apache.activemq.artemis.tests.integration.security;
 
 import org.apache.activemq.artemis.api.core.ActiveMQException;
 import org.apache.activemq.artemis.api.core.ActiveMQSecurityException;
-import org.apache.activemq.artemis.api.core.RoutingType;
+//import org.apache.activemq.artemis.api.core.RoutingType;
 import org.apache.activemq.artemis.api.core.SimpleString;
 import org.apache.activemq.artemis.api.core.TransportConfiguration;
-import org.apache.activemq.artemis.api.core.client.*;
+import org.apache.activemq.artemis.api.core.client.ActiveMQClient;
+import org.apache.activemq.artemis.api.core.client.ClientMessage;
+import org.apache.activemq.artemis.api.core.client.ClientConsumer;
+import org.apache.activemq.artemis.api.core.client.ClientProducer;
+import org.apache.activemq.artemis.api.core.client.ServerLocator;
+import org.apache.activemq.artemis.api.core.client.ClientSession;
+import org.apache.activemq.artemis.api.core.client.ClientSessionFactory;
 import org.apache.activemq.artemis.api.core.management.ActiveMQServerControl;
 import org.apache.activemq.artemis.core.config.Configuration;
 import org.apache.activemq.artemis.core.config.impl.ConfigurationImpl;
 import org.apache.activemq.artemis.core.remoting.impl.invm.InVMAcceptorFactory;
 import org.apache.activemq.artemis.core.remoting.impl.invm.InVMConnectorFactory;
-import org.apache.activemq.artemis.core.security.Role;
+//import org.apache.activemq.artemis.core.security.Role;
 import org.apache.activemq.artemis.core.server.ActiveMQServer;
 import org.apache.activemq.artemis.core.server.ActiveMQServers;
-import org.apache.activemq.artemis.core.server.SecuritySettingPlugin;
+//import org.apache.activemq.artemis.core.server.SecuritySettingPlugin;
+import org.apache.activemq.artemis.core.server.JournalType;
 import org.apache.activemq.artemis.core.server.impl.LegacyLDAPSecuritySettingPlugin;
-import org.apache.activemq.artemis.core.settings.HierarchicalRepository;
+//import org.apache.activemq.artemis.core.settings.HierarchicalRepository;
 import org.apache.activemq.artemis.spi.core.security.ActiveMQJAASSecurityManager;
 import org.apache.activemq.artemis.tests.util.ActiveMQTestBase;
 import org.apache.directory.server.annotations.CreateLdapServer;
@@ -55,12 +62,12 @@ import javax.naming.directory.InitialDirContext;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.HashSet;
-import java.util.Set;
+//import java.util.Set;
 
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
@@ -75,182 +82,182 @@ import org.junit.Assert;
 @ApplyLdifFiles("wildcard-test-ldap.ldif")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LDAPWildCardTest extends AbstractLdapTestUnit {
-   private static final Logger LOG = Logger.getLogger(LDAPWildCardTest.class);
-   private static final String TARGET_TMP = "./target/tmp";
-   private static final String PRINCIPAL = "uid=admin,ou=system";
-   private static final String CREDENTIALS = "secret";
+    private static final Logger LOG = Logger.getLogger(LDAPWildCardTest.class);
+    private static final String TARGET_TMP = "./target/tmp";
+    private static final String PRINCIPAL = "uid=admin,ou=system";
+    private static final String CREDENTIALS = "secret";
 
-   private ServerLocator locator;
-   private ActiveMQServer server;
-   private String testDir;
+    private ServerLocator locator;
+    private ActiveMQServer server;
+    private String testDir;
 
-   @Rule
-   public TemporaryFolder temporaryFolder;
-
-
-   static {
-      String path = System.getProperty("java.security.auth.login.config");
-      if (path == null) {
-         URL resource = LDAPSecurityTest.class.getClassLoader().getResource("ldap-login.config");
-         if (resource != null) {
-            path = resource.getFile();
-            System.setProperty("java.security.auth.login.config", path);
-         }
-      }
-   }
-
-   public LDAPWildCardTest() {
-      File parent = new File(TARGET_TMP);
-      parent.mkdirs();
-      temporaryFolder = new TemporaryFolder(parent);
-   }
-
-   @Before
-   public void setUp() throws Exception {
-      LOG.info("Test setup.");
-
-      Map<String, String> map = new HashMap<>();
-      LegacyLDAPSecuritySettingPlugin legacyLDAPSecuritySettingPlugin = new LegacyLDAPSecuritySettingPlugin();
-      map.put(LegacyLDAPSecuritySettingPlugin.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-      map.put(LegacyLDAPSecuritySettingPlugin.CONNECTION_URL, "ldap://localhost:1024");
-      map.put(LegacyLDAPSecuritySettingPlugin.CONNECTION_USERNAME, "uid=admin,ou=system");
-      map.put(LegacyLDAPSecuritySettingPlugin.CONNECTION_PASSWORD, "secret");
-      map.put(LegacyLDAPSecuritySettingPlugin.CONNECTION_PROTOCOL, "s");
-      map.put(LegacyLDAPSecuritySettingPlugin.AUTHENTICATION, "simple");
-      map.put(LegacyLDAPSecuritySettingPlugin.ENABLE_LISTENER, "true");
-      legacyLDAPSecuritySettingPlugin.init(map);
-
-      locator = ActiveMQClient.createServerLocatorWithoutHA(new TransportConfiguration(InVMConnectorFactory.class.getCanonicalName()));
-
-      testDir = temporaryFolder.getRoot().getAbsolutePath();
-
-      ActiveMQJAASSecurityManager securityManager = new ActiveMQJAASSecurityManager("activemq");
-
-      Configuration configuration = new ConfigurationImpl().setSecurityEnabled(true).addAcceptorConfiguration(new TransportConfiguration(InVMAcceptorFactory.class.getCanonicalName())).setJournalDirectory(ActiveMQTestBase.getJournalDir(testDir, 0, false)).setBindingsDirectory(ActiveMQTestBase.getBindingsDir(testDir, 0, false)).setPagingDirectory(ActiveMQTestBase.getPageDir(testDir, 0, false)).setLargeMessagesDirectory(ActiveMQTestBase.getLargeMessagesDir(testDir, 0, false)).setPersistenceEnabled(false).addSecuritySettingPlugin(legacyLDAPSecuritySettingPlugin);
-
-      server = ActiveMQServers.newActiveMQServer(configuration, ManagementFactory.getPlatformMBeanServer(), securityManager, false);
-
-      LOG.info("LDAP and broker setup completed.");
-   }
-
-   @After
-   public void tearDown() throws Exception {
-      LOG.info("Test teardown");
-
-      if (locator != null){
-         locator.close();
-      }
+    @Rule
+    public TemporaryFolder temporaryFolder;
 
 
-      if (server != null) {
-         server.stop();
-      }
+    static {
+        String path = System.getProperty("java.security.auth.login.config");
+        if (path == null) {
+            URL resource = LDAPSecurityTest.class.getClassLoader().getResource("ldap-login.config");
+            if (resource != null) {
+                path = resource.getFile();
+                System.setProperty("java.security.auth.login.config", path);
+            }
+        }
+    }
 
-   }
+    public LDAPWildCardTest() {
+        File parent = new File(TARGET_TMP);
+        parent.mkdirs();
+        temporaryFolder = new TemporaryFolder(parent);
+    }
 
-   @Test
-   public void testLDAPServer() throws Exception {
+    @Before
+    public void setUp() throws Exception {
+        LOG.info("Test setup.");
 
-      LOG.info("Running Test Case");
+        Map<String, String> map = new HashMap<>();
+        LegacyLDAPSecuritySettingPlugin legacyLDAPSecuritySettingPlugin = new LegacyLDAPSecuritySettingPlugin();
+        map.put(LegacyLDAPSecuritySettingPlugin.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        map.put(LegacyLDAPSecuritySettingPlugin.CONNECTION_URL, "ldap://localhost:1024");
+        map.put(LegacyLDAPSecuritySettingPlugin.CONNECTION_USERNAME, "uid=admin,ou=system");
+        map.put(LegacyLDAPSecuritySettingPlugin.CONNECTION_PASSWORD, "secret");
+        map.put(LegacyLDAPSecuritySettingPlugin.CONNECTION_PROTOCOL, "s");
+        map.put(LegacyLDAPSecuritySettingPlugin.AUTHENTICATION, "simple");
+        map.put(LegacyLDAPSecuritySettingPlugin.ENABLE_LISTENER, "true");
+        legacyLDAPSecuritySettingPlugin.init(map);
 
-      Hashtable<String, String> env = new Hashtable<>();
-      env.put(Context.PROVIDER_URL, "ldap://localhost:1024");
-      env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-      env.put(Context.SECURITY_AUTHENTICATION, "simple");
-      env.put(Context.SECURITY_PRINCIPAL, PRINCIPAL);
-      env.put(Context.SECURITY_CREDENTIALS, CREDENTIALS);
-      DirContext ctx = new InitialDirContext(env);
+        locator = ActiveMQClient.createServerLocatorWithoutHA(new TransportConfiguration(InVMConnectorFactory.class.getCanonicalName()));
 
-      HashSet<String> set = new HashSet<>();
+        testDir = temporaryFolder.getRoot().getAbsolutePath();
 
-      NamingEnumeration<NameClassPair> list = ctx.list("ou=system");
+        ActiveMQJAASSecurityManager securityManager = new ActiveMQJAASSecurityManager("activemq");
 
-      while (list.hasMore()) {
-         NameClassPair ncp = list.next();
-         set.add(ncp.getName());
-      }
+        Configuration configuration = new ConfigurationImpl().setSecurityEnabled(true).addAcceptorConfiguration(new TransportConfiguration(InVMAcceptorFactory.class.getCanonicalName())).setJournalDirectory(ActiveMQTestBase.getJournalDir(testDir, 0, false)).setBindingsDirectory(ActiveMQTestBase.getBindingsDir(testDir, 0, false)).setPagingDirectory(ActiveMQTestBase.getPageDir(testDir, 0, false)).setLargeMessagesDirectory(ActiveMQTestBase.getLargeMessagesDir(testDir, 0, false)).setPersistenceEnabled(false).addSecuritySettingPlugin(legacyLDAPSecuritySettingPlugin).setJournalType(JournalType.NIO);
 
-      Assert.assertTrue(set.contains("uid=admin"));
-      Assert.assertTrue(set.contains("ou=users"));
-      Assert.assertTrue(set.contains("ou=groups"));
-      Assert.assertTrue(set.contains("ou=configuration"));
-      Assert.assertTrue(set.contains("prefNodeName=sysPrefRoot"));
+        server = ActiveMQServers.newActiveMQServer(configuration, ManagementFactory.getPlatformMBeanServer(), securityManager, false);
 
-      set.clear();
-      list = null;
+        LOG.info("LDAP and broker setup completed.");
+    }
 
-      list = ctx.list("o=ActiveMQ,ou=system");
+    @After
+    public void tearDown() throws Exception {
+        LOG.info("Test teardown");
 
-      while(list.hasMore()){
+        if (locator != null) {
+            locator.close();
+        }
 
-         NameClassPair ncp = list.next();
 
-         set.add(ncp.getName());
-      }
+        if (server != null) {
+            server.stop();
+        }
 
-      Assert.assertTrue(set.contains("ou=destinations"));
-      Assert.assertTrue(set.contains("ou=users"));
-      Assert.assertTrue(set.contains("ou=roles"));
+    }
 
-      list = null;
-      set.clear();
+    @Test
+    public void testLDAPServer() throws Exception {
 
-      list = ctx.list("ou=users,o=ActiveMQ,ou=system");
+        LOG.info("Running Test Case");
 
-      while(list.hasMore()){
+        Hashtable<String, String> env = new Hashtable<>();
+        env.put(Context.PROVIDER_URL, "ldap://localhost:1024");
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        env.put(Context.SECURITY_AUTHENTICATION, "simple");
+        env.put(Context.SECURITY_PRINCIPAL, PRINCIPAL);
+        env.put(Context.SECURITY_CREDENTIALS, CREDENTIALS);
+        DirContext ctx = new InitialDirContext(env);
 
-         NameClassPair ncp = list.next();
+        HashSet<String> set = new HashSet<>();
 
-         set.add(ncp.getName());
-      }
+        NamingEnumeration<NameClassPair> list = ctx.list("ou=system");
 
-      Assert.assertEquals(4,set.size());
-      Assert.assertTrue(set.contains("uid=userThree"));
-      Assert.assertTrue(set.contains("uid=quickuser"));
-      Assert.assertTrue(set.contains("uid=userOne"));
-      Assert.assertTrue(set.contains("uid=userTwo"));
-      //Assert.assertTrue(set.contains("uid=admin"));
+        while (list.hasMore()) {
+            NameClassPair ncp = list.next();
+            set.add(ncp.getName());
+        }
 
-      set.clear();
-      list = null;
+        Assert.assertTrue(set.contains("uid=admin"));
+        Assert.assertTrue(set.contains("ou=users"));
+        Assert.assertTrue(set.contains("ou=groups"));
+        Assert.assertTrue(set.contains("ou=configuration"));
+        Assert.assertTrue(set.contains("prefNodeName=sysPrefRoot"));
 
-      list = ctx.list("ou=queues,ou=destinations,o=ActiveMQ,ou=system");
+        set.clear();
+        list = null;
 
-      while(list.hasMore()){
+        list = ctx.list("o=ActiveMQ,ou=system");
 
-         NameClassPair ncp = list.next();
+        while (list.hasMore()) {
 
-         set.add(ncp.getName());
-      }
+            NameClassPair ncp = list.next();
 
-      Assert.assertTrue(set.contains("uid=testQueue"));
-      Assert.assertTrue(set.contains("uid=queueOne"));
-      Assert.assertTrue(set.contains("uid=queueTwo"));
-      Assert.assertTrue(set.contains("uid=queueThree"));
+            set.add(ncp.getName());
+        }
 
-      set.clear();
-      list =null;
+        Assert.assertTrue(set.contains("ou=destinations"));
+        Assert.assertTrue(set.contains("ou=users"));
+        Assert.assertTrue(set.contains("ou=roles"));
 
-      list = ctx.list("ou=roles,o=ActiveMQ,ou=system");
+        list = null;
+        set.clear();
 
-      while(list.hasMore()){
+        list = ctx.list("ou=users,o=ActiveMQ,ou=system");
 
-         NameClassPair ncp = list.next();
+        while (list.hasMore()) {
 
-         set.add(ncp.getName());
-      }
+            NameClassPair ncp = list.next();
 
-      Assert.assertTrue(set.contains("cn=user-one"));
-      Assert.assertTrue(set.contains("cn=user-two"));
-      Assert.assertTrue(set.contains("cn=user-three"));
-      Assert.assertTrue(set.contains("cn=admin"));
-      ctx.close();
-   }
+            set.add(ncp.getName());
+        }
 
-   @Test
-   public void authorizationTest() throws Exception {
-      final SimpleString ADDRESS = new SimpleString("address");
-      final SimpleString DURABLE_QUEUE = new SimpleString("durableQueue");
+        Assert.assertEquals(4, set.size());
+        Assert.assertTrue(set.contains("uid=userThree"));
+        Assert.assertTrue(set.contains("uid=quickuser"));
+        Assert.assertTrue(set.contains("uid=userOne"));
+        Assert.assertTrue(set.contains("uid=userTwo"));
+        //Assert.assertTrue(set.contains("uid=admin"));
+
+        set.clear();
+        list = null;
+
+        list = ctx.list("ou=queues,ou=destinations,o=ActiveMQ,ou=system");
+
+        while (list.hasMore()) {
+
+            NameClassPair ncp = list.next();
+
+            set.add(ncp.getName());
+        }
+
+        Assert.assertTrue(set.contains("uid=testQueue"));
+        Assert.assertTrue(set.contains("uid=queueOne"));
+        Assert.assertTrue(set.contains("uid=queueTwo"));
+        Assert.assertTrue(set.contains("uid=queueThree"));
+
+        set.clear();
+        list = null;
+
+        list = ctx.list("ou=roles,o=ActiveMQ,ou=system");
+
+        while (list.hasMore()) {
+
+            NameClassPair ncp = list.next();
+
+            set.add(ncp.getName());
+        }
+
+        Assert.assertTrue(set.contains("cn=user-one"));
+        Assert.assertTrue(set.contains("cn=user-two"));
+        Assert.assertTrue(set.contains("cn=user-three"));
+        Assert.assertTrue(set.contains("cn=admin"));
+        ctx.close();
+    }
+
+    @Test
+    public void authorizationTest() throws Exception {
+        final SimpleString ADDRESS = new SimpleString("address");
+        final SimpleString DURABLE_QUEUE = new SimpleString("durableQueue");
       /*Map<String, String> options = new HashMap<>();
 
       options.put("connectionProtocol","s");
@@ -264,405 +271,403 @@ public class LDAPWildCardTest extends AbstractLdapTestUnit {
 
       server.getConfiguration().addSecuritySettingPlugin(securitySettingPlugin); */
 
-      server.start();
+        server.start();
 
-      ActiveMQServerControl serverControl = server.getActiveMQServerControl();
+        ActiveMQServerControl serverControl = server.getActiveMQServerControl();
 
-      //serverControl.createQueue("testQueue","testQueue",true,"MULTICAST");
+        //serverControl.createQueue("testQueue","testQueue",true,"MULTICAST");
 
-      serverControl.createQueue("queueOne","queueOne",true,"MULTICAST");
+        serverControl.createQueue("queueOne", "queueOne", true, "MULTICAST");
 
-      serverControl.createQueue("queueTwo","qeueueTwo",true,"MULTICAST");
+        serverControl.createQueue("queueTwo", "qeueueTwo", true, "MULTICAST");
 
-      serverControl.createQueue("queueThree","queueThree",true,"MULTICAST");
+        serverControl.createQueue("queueThree", "queueThree", true, "MULTICAST");
 
-      serverControl.createQueue("test.foo","test.foo",true,"MULTICAST");
+        serverControl.createQueue("test.foo", "test.foo", true, "MULTICAST");
 
-      String[] addresses = serverControl.getAddressNames();
+        String[] addresses = serverControl.getAddressNames();
 
-      // activemq.notification address too
-      Assert.assertTrue(addresses.length == 5);
+        // activemq.notification address too
+        Assert.assertTrue(addresses.length == 5);
 
-      ClientSessionFactory cf = null;
-      ClientSession session = null;
-      ClientProducer producer = null;
-      ClientConsumer consumer = null;
-      ClientMessage clientMessage = null;
-      String queueName = "queueOne";
+        ClientSessionFactory cf = null;
+        ClientSession session = null;
+        ClientProducer producer = null;
+        ClientConsumer consumer = null;
+        ClientMessage clientMessage = null;
+        String queueName = "queueOne";
 
-      // testing userOne
+        // testing userOne
 
-      try {
+        try {
 
-         cf = locator.createSessionFactory();
+            cf = locator.createSessionFactory();
 
-         session = cf.createSession("userOne", "userone+", false, true, true, true, 0);
+            session = cf.createSession("userOne", "userone+", false, true, true, true, 0);
 
-         session.start();
+            session.start();
 
-         producer = session.createProducer();
+            producer = session.createProducer();
 
-         consumer = session.createConsumer(queueName);
+            consumer = session.createConsumer(queueName);
 
-         producer.send(queueName, session.createMessage(true));
+            producer.send(queueName, session.createMessage(true));
 
 
-         clientMessage = consumer.receive(25000);
+            clientMessage = consumer.receive(25000);
 
-         Assert.assertTrue(clientMessage != null);
+            Assert.assertTrue(clientMessage != null);
 
-         producer.close();
+            producer.close();
 
-         consumer.close();
+            consumer.close();
 
-         session.close();
+            session.close();
 
-         producer = null;
-
-         session = null;
-
-      } catch (ActiveMQException e) {
-
-         LOG.errorf(e, "Error in test");
-
-         Assert.fail("should not throw exception");
-
-      } finally {
-
-         if (cf != null) {
-
-            cf.close();
-
-         }
-      }
-
-         // testing userTwo
-      try {
-
-         cf = locator.createSessionFactory();
-
-         session = cf.createSession("userTwo", "usertwo+", false, true, true, true, 0);
-
-         producer = session.createProducer();
-
-         producer.send("queueTwo",session.createMessage(true));
-
-         producer.close();
-
-         session.close();
-
-         producer = null;
-
-         session = null;
-
-      } catch (ActiveMQException e) {
-
-         LOG.errorf(e, "Error in test");
-
-         Assert.fail("should not throw exception");
-
-      } finally {
-
-         if ( cf != null) {
-
-            cf.close();
-
-         }
-      }
-
-      // testing userThree
-      try {
-
-         cf = locator.createSessionFactory();
-
-         session = cf.createSession("userThree", "userthree+", false, true, true, false, 0);
-
-         producer = session.createProducer();
-
-         producer.send("queueThree",session.createMessage(true));
-
-         producer.close();
-
-         session.close();
-
-         producer = null;
+            producer = null;
 
             session = null;
 
-         } catch (ActiveMQException e) {
+        } catch (ActiveMQException e) {
 
             LOG.errorf(e, "Error in test");
 
             Assert.fail("should not throw exception");
 
-         } finally {
+        } finally {
 
-            if ( cf != null) {
+            if (cf != null) {
 
-               cf.close();
+                cf.close();
 
             }
-         }
+        }
 
-      // testing quickuser autocreate destination
-      try {
+        // testing userTwo
+        try {
 
-         cf = locator.createSessionFactory();
+            cf = locator.createSessionFactory();
 
-         session = cf.createSession("quickuser", "quick123+", false, true, true, false, 0);
+            session = cf.createSession("userTwo", "usertwo+", false, true, true, true, 0);
 
-         producer = session.createProducer();
+            producer = session.createProducer();
 
-         producer.send("testQueue",session.createMessage(true));
+            producer.send("queueTwo", session.createMessage(true));
 
-         producer.close();
+            producer.close();
 
-         session.close();
+            session.close();
 
-         producer = null;
+            producer = null;
 
-         session = null;
+            session = null;
 
-      } catch (ActiveMQException e) {
+        } catch (ActiveMQException e) {
 
-         LOG.errorf(e, "Error in test");
+            LOG.errorf(e, "Error in test");
 
-         Assert.fail("should not throw exception");
+            Assert.fail("should not throw exception");
 
-      } finally {
+        } finally {
 
-         if ( cf != null) {
+            if (cf != null) {
 
-            cf.close();
+                cf.close();
 
-         }
-      }
+            }
+        }
 
+        // testing userThree
+        try {
 
-   }
+            cf = locator.createSessionFactory();
 
-   @Test
-   public void authenticationFailureTest() throws Exception{
+            session = cf.createSession("userThree", "userthree+", false, true, true, false, 0);
 
-      server.start();
-      ClientSessionFactory cf = null;
-      ClientSession session = null;
+            producer = session.createProducer();
 
-      try {
+            producer.send("queueThree", session.createMessage(true));
 
-         cf = locator.createSessionFactory();
+            producer.close();
 
-         session = cf.createSession("quickuser", "quick123", false, true, true, false, 0);
+            session.close();
 
-         session.close();
+            producer = null;
 
-      } catch (ActiveMQSecurityException securityException)  {
+            session = null;
 
-         LOG.errorf(securityException,"Can't authenticate quickuser - test passed");
+        } catch (ActiveMQException e) {
 
-      } catch (ActiveMQException e) {
+            LOG.errorf(e, "Error in test");
 
-         LOG.errorf(e,"Error in test quickuser - test failed.");
+            Assert.fail("should not throw exception");
 
-         Assert.fail("should not throw exception.");
+        } finally {
 
-      } finally {
+            if (cf != null) {
 
-         if (cf != null) {
+                cf.close();
 
-            cf.close();
+            }
+        }
 
-         }
+        // testing quickuser autocreate destination
+        try {
 
-      }
-   }
+            cf = locator.createSessionFactory();
 
-   @Test
-   public void authenticationTest() throws Exception {
+            session = cf.createSession("quickuser", "quick123+", false, true, true, false, 0);
 
-      server.start();
-      ClientSessionFactory cf = null;
-      ClientSession session = null;
+            producer = session.createProducer();
 
-      try {
+            producer.send("testQueue", session.createMessage(true));
 
-         cf = locator.createSessionFactory();
+            producer.close();
 
-         session = cf.createSession("quickuser", "quick123+", false, true, true, false, 0);
+            session.close();
 
-         session.close();
+            producer = null;
 
-      } catch (ActiveMQException e) {
+            session = null;
 
-         LOG.errorf(e,"Error in test quickuser");
+        } catch (ActiveMQException e) {
 
-         Assert.fail("should not throw exception");
+            LOG.errorf(e, "Error in test");
 
-      } finally {
+            Assert.fail("should not throw exception");
 
-         if (cf != null) {
+        } finally {
 
-            cf.close();
+            if (cf != null) {
 
-         }
+                cf.close();
 
-      }
+            }
+        }
 
 
-      try {
+    }
 
-         cf = locator.createSessionFactory();
+    @Test
+    public void authenticationFailureTest() throws Exception {
 
-         session = cf.createSession("userOne", "userone+", false, true, true, false, 0);
+        server.start();
+        ClientSessionFactory cf = null;
+        ClientSession session = null;
 
-         session.close();
+        try {
 
-         session = null;
+            cf = locator.createSessionFactory();
 
-      } catch (ActiveMQSecurityException securityEsxception) {
+            session = cf.createSession("quickuser", "quick123", false, true, true, false, 0);
 
-         LOG.errorf(securityEsxception,"Cannot authenticate user userOne");
+            session.close();
 
-      } catch (ActiveMQException e) {
+        } catch (ActiveMQSecurityException securityException) {
 
-         LOG.errorf(e,"Error in test userOne");
+            LOG.errorf(securityException, "Can't authenticate quickuser - test passed");
 
-         Assert.fail("should not throw exception");
+        } catch (ActiveMQException e) {
 
-      } finally {
+            LOG.errorf(e, "Error in test quickuser - test failed.");
 
-         if (cf != null) {
+            Assert.fail("should not throw exception.");
 
-            cf.close();
+        } finally {
 
-         }
+            if (cf != null) {
 
-      }
+                cf.close();
 
+            }
 
+        }
+    }
 
-      try {
+    @Test
+    public void authenticationTest() throws Exception {
 
-         cf = locator.createSessionFactory();
+        server.start();
+        ClientSessionFactory cf = null;
+        ClientSession session = null;
 
-         session = cf.createSession("userTwo", "usertwo+", false, true, true, false, 0);
+        try {
 
-         session.close();
+            cf = locator.createSessionFactory();
 
-         session = null;
+            session = cf.createSession("quickuser", "quick123+", false, true, true, false, 0);
 
-      } catch (ActiveMQException e) {
+            session.close();
 
-         LOG.errorf(e,"Error in test userTwo");
+        } catch (ActiveMQException e) {
 
-         Assert.fail("should not throw exception");
+            LOG.errorf(e, "Error in test quickuser");
 
-      } finally {
+            Assert.fail("should not throw exception");
 
-         if (cf != null) {
+        } finally {
 
-            cf.close();
+            if (cf != null) {
 
-         }
+                cf.close();
 
-      }
+            }
 
+        }
 
 
-      try {
+        try {
 
-         cf = locator.createSessionFactory();
+            cf = locator.createSessionFactory();
 
-         session = cf.createSession("userThree", "userthree+", false, true, true, false, 0);
+            session = cf.createSession("userOne", "userone+", false, true, true, false, 0);
 
-         session.close();
+            session.close();
 
-         session = null;
+            session = null;
 
-      } catch (ActiveMQException e) {
+        } catch (ActiveMQSecurityException securityEsxception) {
 
-         LOG.errorf(e,"Error in test userThree");
+            LOG.errorf(securityEsxception, "Cannot authenticate user userOne");
 
-         Assert.fail("should not throw exception");
+        } catch (ActiveMQException e) {
 
-      } finally {
+            LOG.errorf(e, "Error in test userOne");
 
-         if (cf != null) {
+            Assert.fail("should not throw exception");
 
-            cf.close();
+        } finally {
 
-         }
+            if (cf != null) {
 
-      }
+                cf.close();
 
-   }
+            }
 
-   @Test
-   public void authorizationFailureTest() throws Exception {
+        }
 
-      server.start();
 
-      ActiveMQServerControl serverControl = server.getActiveMQServerControl();
+        try {
 
-      serverControl.createQueue("queueOne","queueOne",true,"MULTICAST");
+            cf = locator.createSessionFactory();
 
-      serverControl.createQueue("queueTwo","qeueueTwo",true,"MULTICAST");
+            session = cf.createSession("userTwo", "usertwo+", false, true, true, false, 0);
 
-      serverControl.createQueue("queueThree","queueThree",true,"MULTICAST");
+            session.close();
 
-      String[] addresses = serverControl.getAddressNames();
+            session = null;
 
-      // activemq.notification address too
-      Assert.assertTrue(addresses.length == 4);
+        } catch (ActiveMQException e) {
 
-      ClientSessionFactory cf = null;
-      ClientSession session = null;
-      ClientProducer producer = null;
-      ClientConsumer consumer = null;
-      ClientMessage clientMessage = null;
-      String queueName = "queueTwo";
+            LOG.errorf(e, "Error in test userTwo");
 
-      try {
+            Assert.fail("should not throw exception");
 
-         cf = locator.createSessionFactory();
+        } finally {
 
-         session = cf.createSession("userOne", "userone+", false, true, true, true, 0);
+            if (cf != null) {
 
-         session.start();
+                cf.close();
 
-         producer = session.createProducer();
+            }
 
-         consumer = session.createConsumer(queueName);
+        }
 
-         producer.send(queueName, session.createMessage(true));
 
+        try {
 
-         clientMessage = consumer.receive(25000);
+            cf = locator.createSessionFactory();
 
-         Assert.assertTrue(clientMessage != null);
+            session = cf.createSession("userThree", "userthree+", false, true, true, false, 0);
 
-         producer.close();
+            session.close();
 
-         consumer.close();
+            session = null;
 
-         session.close();
+        } catch (ActiveMQException e) {
 
-         producer = null;
+            LOG.errorf(e, "Error in test userThree");
 
-         session = null;
+            Assert.fail("should not throw exception");
 
-      } catch (ActiveMQException activeMQException){
+        } finally {
 
-         LOG.errorf(activeMQException,"Authorization failure - test passed.");
+            if (cf != null) {
 
-      }
-   }
+                cf.close();
 
+            }
 
-   @Test
-   public void wildCardAuthorizationTest() throws Exception {
-      final SimpleString ADDRESS = new SimpleString("address");
-      final SimpleString DURABLE_QUEUE = new SimpleString("durableQueue");
+        }
+
+    }
+
+    @Test
+    public void authorizationFailureTest() throws Exception {
+
+        server.start();
+
+        ActiveMQServerControl serverControl = server.getActiveMQServerControl();
+
+        serverControl.createQueue("queueOne", "queueOne", true, "MULTICAST");
+
+        serverControl.createQueue("queueTwo", "qeueueTwo", true, "MULTICAST");
+
+        serverControl.createQueue("queueThree", "queueThree", true, "MULTICAST");
+
+        String[] addresses = serverControl.getAddressNames();
+
+        // activemq.notification address too
+        Assert.assertTrue(addresses.length == 4);
+
+        ClientSessionFactory cf = null;
+        ClientSession session = null;
+        ClientProducer producer = null;
+        ClientConsumer consumer = null;
+        ClientMessage clientMessage = null;
+        String queueName = "queueTwo";
+
+        try {
+
+            cf = locator.createSessionFactory();
+
+            session = cf.createSession("userOne", "userone+", false, true, true, true, 0);
+
+            session.start();
+
+            producer = session.createProducer();
+
+            consumer = session.createConsumer(queueName);
+
+            producer.send(queueName, session.createMessage(true));
+
+
+            clientMessage = consumer.receive(25000);
+
+            Assert.assertTrue(clientMessage != null);
+
+            producer.close();
+
+            consumer.close();
+
+            session.close();
+
+            producer = null;
+
+            session = null;
+
+        } catch (ActiveMQException activeMQException) {
+
+            LOG.errorf(activeMQException, "Authorization failure - test passed.");
+
+        }
+    }
+
+
+    @Test
+    public void wildCardAuthorizationTest() throws Exception {
+        final SimpleString ADDRESS = new SimpleString("address");
+        final SimpleString DURABLE_QUEUE = new SimpleString("durableQueue");
       /*Map<String, String> options = new HashMap<>();
 
       options.put("connectionProtocol","s");
@@ -676,70 +681,70 @@ public class LDAPWildCardTest extends AbstractLdapTestUnit {
 
       server.getConfiguration().addSecuritySettingPlugin(securitySettingPlugin); */
 
-      server.start();
+        server.start();
 
-      ActiveMQServerControl serverControl = server.getActiveMQServerControl();
+        ActiveMQServerControl serverControl = server.getActiveMQServerControl();
 
-      //serverControl.createQueue("testQueue","testQueue",true,"MULTICAST");
+        //serverControl.createQueue("testQueue","testQueue",true,"MULTICAST");
 
-      serverControl.createQueue("queueOne","queueOne",true,"MULTICAST");
+        serverControl.createQueue("queueOne", "queueOne", true, "MULTICAST");
 
-      serverControl.createQueue("queueTwo","qeueueTwo",true,"MULTICAST");
+        serverControl.createQueue("queueTwo", "qeueueTwo", true, "MULTICAST");
 
-      serverControl.createQueue("queueThree","queueThree",true,"MULTICAST");
+        serverControl.createQueue("queueThree", "queueThree", true, "MULTICAST");
 
-      serverControl.createQueue("test.foo","test.foo",true,"MULTICAST");
+        serverControl.createQueue("test.foo", "test.foo", true, "MULTICAST");
 
-      String[] addresses = serverControl.getAddressNames();
+        String[] addresses = serverControl.getAddressNames();
 
-      // activemq.notification address too
-      Assert.assertTrue(addresses.length == 5);
+        // activemq.notification address too
+        Assert.assertTrue(addresses.length == 5);
 
-      ClientSessionFactory cf = null;
-      ClientSession session = null;
-      ClientProducer producer = null;
-      ClientConsumer consumer = null;
-      ClientMessage clientMessage = null;
-      String queueName = "queueOne";
-      // testing quickuser autocreate destination
-      try {
+        ClientSessionFactory cf = null;
+        ClientSession session = null;
+        ClientProducer producer = null;
+        ClientConsumer consumer = null;
+        ClientMessage clientMessage = null;
+        String queueName = "queueOne";
+        // testing quickuser autocreate destination
+        try {
 
-         cf = locator.createSessionFactory();
+            cf = locator.createSessionFactory();
 
-         session = cf.createSession("quickuser", "quick123+", false, true, true, false, 0);
+            session = cf.createSession("quickuser", "quick123+", false, true, true, false, 0);
 
-         producer = session.createProducer();
+            producer = session.createProducer();
 
-         producer.send("test.foo",session.createMessage(true));
+            producer.send("test.foo", session.createMessage(true));
 
-         producer.close();
+            producer.close();
 
-         session.close();
+            session.close();
 
-         producer = null;
+            producer = null;
 
-         session = null;
+            session = null;
 
-      } catch (ActiveMQException e) {
+        } catch (ActiveMQException e) {
 
-         LOG.errorf(e, "Error in test");
+            LOG.errorf(e, "Error in test");
 
-         Assert.fail("should not throw exception");
+            Assert.fail("should not throw exception");
 
-      } finally {
+        } finally {
 
-         if ( cf != null) {
+            if (cf != null) {
 
-            cf.close();
+                cf.close();
 
-         }
-      }
-   }
+            }
+        }
+    }
 
-   public void init() {
+    public void init() {
 
-   }
+    }
 
-   public void shutdown() {
-   }
+    public void shutdown() {
+    }
 }
