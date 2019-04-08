@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <profiles>
+    <profile>
+      <repositories>
+        <repository>
+          <id>jenkins</id>
+          <name>jenkins</name>
+          <url>http://repo.jenkins-ci.org/releases/</url>
+        </repository>
+        <repository>
+          <snapshots />
+          <id>apache.snapshots</id>
+          <name>Apache Development Snapshot Repository</name>
+          <url>https://repository.apache.org/content/repositories/snapshots/</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <snapshots />
+          <id>apache.snapshots</id>
+          <name>Apache Development Snapshot Repository</name>
+          <url>https://repository.apache.org/content/repositories/snapshots/</url>
+        </pluginRepository>
+      </pluginRepositories>
+      <id>removed-by-pme</id>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>removed-by-pme</activeProfile>
+    <activeProfile>M2E</activeProfile>
+    <activeProfile>jdk18</activeProfile>
+    <activeProfile>owasp</activeProfile>
+    <activeProfile>dev</activeProfile>
+    <activeProfile>distro</activeProfile>
+    <activeProfile>tests</activeProfile>
+    <activeProfile>fast-tests</activeProfile>
+    <activeProfile>jacoco</activeProfile>
+    <activeProfile>jacoco-generate-report</activeProfile>
+    <activeProfile>ibm-jdk8</activeProfile>
+    <activeProfile>ibmjdk</activeProfile>
+    <activeProfile>extra-tests</activeProfile>
+    <activeProfile>activemq5-unit-tests</activeProfile>
+    <activeProfile>openwire-tests</activeProfile>
+    <activeProfile>noServer</activeProfile>
+    <activeProfile>noClient</activeProfile>
+    <activeProfile>noRun</activeProfile>
+    <activeProfile>examples</activeProfile>
+    <activeProfile>Weld</activeProfile>
+    <activeProfile>OWB</activeProfile>
+    <activeProfile>local</activeProfile>
+    <activeProfile>remote</activeProfile>
+    <activeProfile>listener</activeProfile>
+    <activeProfile>sender</activeProfile>
+    <activeProfile>server</activeProfile>
+    <activeProfile>chat1</activeProfile>
+    <activeProfile>chat2</activeProfile>
+    <activeProfile>chat3</activeProfile>
+    <activeProfile>example</activeProfile>
+    <activeProfile>release</activeProfile>
+  </activeProfiles>
+</settings>
