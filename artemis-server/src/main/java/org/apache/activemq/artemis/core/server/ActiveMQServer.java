@@ -280,6 +280,8 @@ public interface ActiveMQServer extends ServiceComponent {
 
    PostOffice getPostOffice();
 
+   void clearAddressCache();
+
    QueueFactory getQueueFactory();
 
    ResourceManager getResourceManager();
