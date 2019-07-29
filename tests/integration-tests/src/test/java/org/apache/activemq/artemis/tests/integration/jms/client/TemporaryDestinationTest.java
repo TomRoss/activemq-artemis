@@ -222,4 +222,49 @@ public class TemporaryDestinationTest extends JMSTestBase {
          }
       }
    }
+
+   @Test
+   public void testForTempQueueTargetInfosLeak() throws Exception {
+      try {
+         conn = createConnection();
+         Session s = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+         TemporaryQueue temporaryQueue = s.createTemporaryQueue();
+         MessageProducer producer = s.createProducer(temporaryQueue);
+         producer.send(s.createMessage());
+         temporaryQueue.delete();
+         for (ServerSession serverSession : server.getSessions()) {
+            assertFalse(((ServerSessionImpl)serverSession).cloneTargetAddresses().containsKey(SimpleString.toSimpleString(temporaryQueue.getQueueName())));
+         }
+      } finally {
+         if (conn != null) {
+            conn.close();
+         }
+      }
+   }
+
+   @Test
+   public void testForSecurityCacheLeak() throws Exception {
+      server.getSecurityStore().setSecurityEnabled(true);
+      ActiveMQJAASSecurityManager securityManager = (ActiveMQJAASSecurityManager) server.getSecurityManager();
+      securityManager.getConfiguration().addUser("IDo", "Exist");
+      securityManager.getConfiguration().addRole("IDo", "myrole");
+      Role myRole = new Role("myrole", true, true, true, true, true, true, true, true, true, true);
+      Set<Role> anySet = new HashSet<>();
+      anySet.add(myRole);
+      server.getSecurityRepository().addMatch("#", anySet);
+
+      try {
+         conn = addConnection(cf.createConnection("IDo", "Exist"));
+         Session s = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+         for (int i = 0; i < 10; i++) {
+            TemporaryQueue temporaryQueue = s.createTemporaryQueue();
+            temporaryQueue.delete();
+         }
+         assertEquals(0, server.getSecurityRepository().getCacheSize());
+      } finally {
+         if (conn != null) {
+            conn.close();
+         }
+      }
+   }
 }
