@@ -568,6 +568,27 @@ public class TemporaryDestinationTest extends JMSTestCase {
       }
    }
 
+   @Test
+   public void testForTempQueueTargetInfosSizeLimit() throws Exception {
+            try {
+                  conn = createConnection();
+                  Session s = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+                  for (int i = 0; i < 200; i++) {
+                        TemporaryQueue temporaryQueue = s.createTemporaryQueue();
+                        MessageProducer producer = s.createProducer(temporaryQueue);
+                        producer.send(s.createMessage());
+                     }
+                  /*for (ServerSession serverSession : server.getSessions()) {
+                        assertTrue(((ServerSessionImpl)serverSession).cloneTargetAddresses().size() <= 100);
+                     }*/
+               } finally {
+                  if (conn != null) {
+                        conn.close();
+                     }
+               }
+         }
+
+
    // Package protected ---------------------------------------------
 
    // Protected -----------------------------------------------------
