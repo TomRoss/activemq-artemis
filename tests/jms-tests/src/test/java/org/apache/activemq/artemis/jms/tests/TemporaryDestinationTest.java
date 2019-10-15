@@ -588,6 +588,22 @@ public class TemporaryDestinationTest extends JMSTestCase {
                }
          }
 
+   @Test
+   public void testForTempQueueCleanerUpperLeak() throws Exception {
+            try {
+                  conn = createConnection();
+                  Session s = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+                  TemporaryQueue temporaryQueue = s.createTemporaryQueue();
+                  temporaryQueue.delete();
+                  /*for (ServerSession serverSession : server.getSessions()) {
+                        assertEquals(0, ((ServerSessionImpl)serverSession).getTempQueueCleanUppers().size());
+                     }*/
+               } finally {
+                  if (conn != null) {
+                        conn.close();
+                     }
+               }
+         }
 
    // Package protected ---------------------------------------------
 
