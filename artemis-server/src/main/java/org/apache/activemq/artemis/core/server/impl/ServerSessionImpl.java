@@ -641,6 +641,10 @@ public class ServerSessionImpl implements ServerSession, FailureListener {
 
          remotingConnection.removeFailureListener(cleaner);
       }
+
+      if (postOffice.getBindingsForAddress(queueToDelete).getBindings().size() == 0) {
+          targetAddressInfos.remove(queueToDelete);
+      }
    }
 
    @Override

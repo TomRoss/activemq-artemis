@@ -41,6 +41,8 @@ import org.junit.Before;
 @Deprecated
 public class JMSTestCase extends ActiveMQServerTestCase {
 
+   protected Connection conn;
+
    protected static final ArrayList<String> NETTY_CONNECTOR = new ArrayList<>();
 
    static {

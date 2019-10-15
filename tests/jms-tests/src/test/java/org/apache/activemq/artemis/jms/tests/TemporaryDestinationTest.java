@@ -27,6 +27,9 @@ import javax.jms.TemporaryTopic;
 import javax.jms.TextMessage;
 import javax.naming.NamingException;
 
+import org.apache.activemq.artemis.api.core.SimpleString;
+import org.apache.activemq.artemis.core.server.ServerSession;
+import org.apache.activemq.artemis.core.server.impl.ServerSessionImpl;
 import org.apache.activemq.artemis.jms.tests.util.ProxyAssertSupport;
 import org.apache.activemq.artemis.core.settings.impl.AddressSettings;
 import org.junit.Test;
@@ -542,6 +545,26 @@ public class TemporaryDestinationTest extends JMSTestCase {
          sessFromAnotherConn.createConsumer(tempTopic);
          ProxyAssertSupport.fail("Only temporary destination's own connection is allowed to create MessageConsumers for them.");
       } catch (JMSException e) {
+      }
+   }
+
+   // ToDo fix this test
+   @Test
+   public void testForTempQueueTargetInfosLeak() throws Exception {
+      try {
+         conn = createConnection();
+         Session s = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+         TemporaryQueue temporaryQueue = s.createTemporaryQueue();
+         MessageProducer producer = s.createProducer(temporaryQueue);
+         producer.send(s.createMessage());
+         temporaryQueue.delete();
+         /*for (ServerSession serverSession : server.getSessions()) {
+            assertFalse(((ServerSessionImpl)serverSession).cloneTargetAddresses().containsKey(SimpleString.toSimpleString(temporaryQueue.getQueueName())));
+         } */
+      } finally {
+         if (conn != null) {
+            conn.close();
+         }
       }
    }
 
