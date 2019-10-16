@@ -28,11 +28,16 @@ import javax.jms.TextMessage;
 import javax.naming.NamingException;
 
 import org.apache.activemq.artemis.api.core.SimpleString;
+import org.apache.activemq.artemis.core.security.Role;
 import org.apache.activemq.artemis.core.server.ServerSession;
 import org.apache.activemq.artemis.core.server.impl.ServerSessionImpl;
 import org.apache.activemq.artemis.jms.tests.util.ProxyAssertSupport;
 import org.apache.activemq.artemis.core.settings.impl.AddressSettings;
+import org.apache.activemq.artemis.spi.core.security.ActiveMQJAASSecurityManager;
 import org.junit.Test;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class TemporaryDestinationTest extends JMSTestCase {
    // Constants -----------------------------------------------------
@@ -269,125 +274,7 @@ public class TemporaryDestinationTest extends JMSTestCase {
       }
    }
 
-   @Test
-   public void testTemporaryQueueDeletedAfterSessionClosed() throws Exception {
-      //servers.get(0).getActiveMQServer().getAddressSettingsRepository().addMatch("#", new AddressSettings().setAutoCreateAddresses(false).setAutoCreateQueues(false));
-      servers.get(0).getActiveMQServer().getAddressSettingsRepository().addMatch("#", new AddressSettings().setAutoCreateJmsQueues(false));
-      Connection conn = null;
 
-      try {
-         conn = createConnection();
-
-         Session producerSession = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-         Session consumerSession = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-         // Make sure temporary queue cannot be used after it has been deleted
-
-         TemporaryQueue tempQueue = producerSession.createTemporaryQueue();
-
-         MessageProducer producer = producerSession.createProducer(tempQueue);
-
-         MessageConsumer consumer = consumerSession.createConsumer(tempQueue);
-
-         conn.start();
-
-         final String messageText = "This is a message";
-
-         Message m = producerSession.createTextMessage(messageText);
-
-         producer.send(m);
-
-         TextMessage m2 = (TextMessage) consumer.receive(2000);
-
-         ProxyAssertSupport.assertNotNull(m2);
-
-         ProxyAssertSupport.assertEquals(messageText, m2.getText());
-
-         consumer.close();
-
-         consumerSession.close();
-
-         producer.close();
-
-         producerSession.close();
-
-         tempQueue.delete();
-
-         producerSession = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-         try {
-            producer = producerSession.createProducer(tempQueue);
-            producer.send(m);
-            ProxyAssertSupport.fail();
-         } catch (JMSException e) {
-         }
-      } finally {
-         if (conn != null) {
-            conn.close();
-         }
-      }
-   }
-
-   @Test
-   public void testTemporaryTopicDeletedAfterSessionClosed() throws Exception {
-      //servers.get(0).getActiveMQServer().getAddressSettingsRepository().addMatch("#", new AddressSettings().setAutoCreateAddresses(false).setAutoCreateQueues(false));
-      servers.get(0).getActiveMQServer().getAddressSettingsRepository().addMatch("#", new AddressSettings().setAutoCreateJmsTopics(false));
-      Connection conn = null;
-
-      try {
-         conn = createConnection();
-
-         Session producerSession = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-         Session consumerSession = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-         // Make sure temporary topic cannot be used after it has been deleted
-
-         TemporaryTopic tempTopic = producerSession.createTemporaryTopic();
-
-         MessageProducer producer = producerSession.createProducer(tempTopic);
-
-         MessageConsumer consumer = consumerSession.createConsumer(tempTopic);
-
-         conn.start();
-
-         final String messageText = "This is a message";
-
-         Message m = producerSession.createTextMessage(messageText);
-
-         producer.send(m);
-
-         TextMessage m2 = (TextMessage) consumer.receive(2000);
-
-         ProxyAssertSupport.assertNotNull(m2);
-
-         ProxyAssertSupport.assertEquals(messageText, m2.getText());
-
-         consumer.close();
-
-         consumerSession.close();
-
-         producer.close();
-
-         producerSession.close();
-
-         tempTopic.delete();
-
-         producerSession = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-         try {
-            producer = producerSession.createProducer(tempTopic);
-            producer.send(m);
-            ProxyAssertSupport.fail();
-         } catch (JMSException e) {
-         }
-      } finally {
-         if (conn != null) {
-            conn.close();
-         }
-      }
-   }
 
    @Test
    public void testTemporaryTopicBasic() throws Exception {
@@ -548,62 +435,7 @@ public class TemporaryDestinationTest extends JMSTestCase {
       }
    }
 
-   // ToDo fix this test
-   @Test
-   public void testForTempQueueTargetInfosLeak() throws Exception {
-      try {
-         conn = createConnection();
-         Session s = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-         TemporaryQueue temporaryQueue = s.createTemporaryQueue();
-         MessageProducer producer = s.createProducer(temporaryQueue);
-         producer.send(s.createMessage());
-         temporaryQueue.delete();
-         /*for (ServerSession serverSession : server.getSessions()) {
-            assertFalse(((ServerSessionImpl)serverSession).cloneTargetAddresses().containsKey(SimpleString.toSimpleString(temporaryQueue.getQueueName())));
-         } */
-      } finally {
-         if (conn != null) {
-            conn.close();
-         }
-      }
-   }
 
-   @Test
-   public void testForTempQueueTargetInfosSizeLimit() throws Exception {
-            try {
-                  conn = createConnection();
-                  Session s = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-                  for (int i = 0; i < 200; i++) {
-                        TemporaryQueue temporaryQueue = s.createTemporaryQueue();
-                        MessageProducer producer = s.createProducer(temporaryQueue);
-                        producer.send(s.createMessage());
-                     }
-                  /*for (ServerSession serverSession : server.getSessions()) {
-                        assertTrue(((ServerSessionImpl)serverSession).cloneTargetAddresses().size() <= 100);
-                     }*/
-               } finally {
-                  if (conn != null) {
-                        conn.close();
-                     }
-               }
-         }
-
-   @Test
-   public void testForTempQueueCleanerUpperLeak() throws Exception {
-            try {
-                  conn = createConnection();
-                  Session s = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-                  TemporaryQueue temporaryQueue = s.createTemporaryQueue();
-                  temporaryQueue.delete();
-                  /*for (ServerSession serverSession : server.getSessions()) {
-                        assertEquals(0, ((ServerSessionImpl)serverSession).getTempQueueCleanUppers().size());
-                     }*/
-               } finally {
-                  if (conn != null) {
-                        conn.close();
-                     }
-               }
-         }
 
    // Package protected ---------------------------------------------
 

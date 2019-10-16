@@ -461,53 +461,59 @@ public class PostOfficeImpl implements PostOffice, NotificationListener, Binding
                                              Transaction tx,
                                              boolean deleteData) throws Exception {
 
-      addressSettingsRepository.clearCache();
+      //addressSettingsRepository.clearCache();
+try {
 
-      Binding binding = addressManager.removeBinding(uniqueName, tx);
+   Binding binding = addressManager.removeBinding(uniqueName, tx);
 
-      if (binding == null) {
-         throw new ActiveMQNonExistentQueueException();
+   if (binding == null) {
+      throw new ActiveMQNonExistentQueueException();
+   }
+
+   if (deleteData && addressManager.getBindingsForRoutingAddress(binding.getAddress()) == null) {
+      pagingManager.deletePageStore(binding.getAddress());
+
+      managementService.unregisterAddress(binding.getAddress());
+
+      deleteDuplicateCache(binding.getAddress());
+   }
+
+   if (binding.getType() == BindingType.LOCAL_QUEUE) {
+      managementService.unregisterQueue(uniqueName, binding.getAddress());
+   } else if (binding.getType() == BindingType.DIVERT) {
+      managementService.unregisterDivert(uniqueName);
+   }
+
+   if (binding.getType() != BindingType.DIVERT) {
+      TypedProperties props = new TypedProperties();
+
+      props.putSimpleStringProperty(ManagementHelper.HDR_ADDRESS, binding.getAddress());
+
+      props.putSimpleStringProperty(ManagementHelper.HDR_CLUSTER_NAME, binding.getClusterName());
+
+      props.putSimpleStringProperty(ManagementHelper.HDR_ROUTING_NAME, binding.getRoutingName());
+
+      props.putIntProperty(ManagementHelper.HDR_DISTANCE, binding.getDistance());
+
+      props.putLongProperty(ManagementHelper.HDR_BINDING_ID, binding.getID());
+
+      if (binding.getFilter() == null) {
+         props.putSimpleStringProperty(ManagementHelper.HDR_FILTERSTRING, null);
+      } else {
+         props.putSimpleStringProperty(ManagementHelper.HDR_FILTERSTRING, binding.getFilter().getFilterString());
       }
 
-      if (deleteData && addressManager.getBindingsForRoutingAddress(binding.getAddress()) == null) {
-         pagingManager.deletePageStore(binding.getAddress());
+      managementService.sendNotification(new Notification(null, CoreNotificationType.BINDING_REMOVED, props));
+   }
 
-         managementService.unregisterAddress(binding.getAddress());
+   binding.close();
 
-         deleteDuplicateCache(binding.getAddress());
-      }
+   return binding;
+   
+} finally {
 
-      if (binding.getType() == BindingType.LOCAL_QUEUE) {
-         managementService.unregisterQueue(uniqueName, binding.getAddress());
-      } else if (binding.getType() == BindingType.DIVERT) {
-         managementService.unregisterDivert(uniqueName);
-      }
-
-      if (binding.getType() != BindingType.DIVERT) {
-         TypedProperties props = new TypedProperties();
-
-         props.putSimpleStringProperty(ManagementHelper.HDR_ADDRESS, binding.getAddress());
-
-         props.putSimpleStringProperty(ManagementHelper.HDR_CLUSTER_NAME, binding.getClusterName());
-
-         props.putSimpleStringProperty(ManagementHelper.HDR_ROUTING_NAME, binding.getRoutingName());
-
-         props.putIntProperty(ManagementHelper.HDR_DISTANCE, binding.getDistance());
-
-         props.putLongProperty(ManagementHelper.HDR_BINDING_ID, binding.getID());
-
-         if (binding.getFilter() == null) {
-            props.putSimpleStringProperty(ManagementHelper.HDR_FILTERSTRING, null);
-         } else {
-            props.putSimpleStringProperty(ManagementHelper.HDR_FILTERSTRING, binding.getFilter().getFilterString());
-         }
-
-         managementService.sendNotification(new Notification(null, CoreNotificationType.BINDING_REMOVED, props));
-      }
-
-      binding.close();
-
-      return binding;
+   server.clearAddressCache();
+}
    }
 
    private void deleteDuplicateCache(SimpleString address) throws Exception {

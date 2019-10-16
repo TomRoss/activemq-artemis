@@ -1484,7 +1484,7 @@ public class ServerSessionImpl implements ServerSession, FailureListener {
       this.queueCreator = server.getJMSDestinationCreator();
    }
 
-   private Map<SimpleString, Pair<UUID, AtomicLong>> cloneTargetAddresses() {
+   public Map<SimpleString, Pair<UUID, AtomicLong>> cloneTargetAddresses() {
       return new HashMap<>(targetAddressInfos);
    }
 

@@ -120,6 +120,8 @@ public interface ActiveMQServer extends ActiveMQComponent {
     */
    void lockActivation();
 
+   void clearAddressCache();
+
    /**
     * Returns the resource to manage this ActiveMQ Artemis server.
     *

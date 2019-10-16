@@ -77,9 +77,21 @@ public class JMSTestBase extends ActiveMQTestBase {
       return false;
    }
 
+   private final Set<Connection> connectionsSet = new HashSet<>();
+
    protected final JMSContext addContext(JMSContext context0) {
       contextSet.add(context0);
       return context0;
+   }
+
+   protected final Connection createConnection() throws JMSException {
+      Connection c = cf.createConnection();
+      return addConnection(c);
+   }
+
+   protected final Connection addConnection(Connection conn) {
+      connectionsSet.add(conn);
+      return conn;
    }
 
    protected final JMSContext createContext() {
