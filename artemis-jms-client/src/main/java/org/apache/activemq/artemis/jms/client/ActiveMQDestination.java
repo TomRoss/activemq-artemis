@@ -268,6 +268,8 @@ public class ActiveMQDestination implements Destination, Serializable, Reference
 
    private final transient ActiveMQSession session;
 
+   private transient boolean created;
+
    // Constructors --------------------------------------------------
 
    protected ActiveMQDestination(final String address,
@@ -310,6 +312,7 @@ public class ActiveMQDestination implements Destination, Serializable, Reference
             } else {
                sessionToUse.deleteTemporaryTopic(this);
             }
+            setCreated(false);
          } finally {
 
             if (openedHere){
@@ -339,6 +342,14 @@ public class ActiveMQDestination implements Destination, Serializable, Reference
 
    public boolean isTemporary() {
       return temporary;
+   }
+
+   public boolean isCreated() {
+      return created;
+   }
+
+   public void setCreated(boolean created) {
+      this.created = created;
    }
 
    @Override

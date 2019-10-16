@@ -93,11 +93,11 @@ public class TemporaryDestinationTest extends JMSTestBase {
 
          consumer.close();
 
-         //assertTrue(((ActiveMQDestination) tempQueue).isCreated());
+         assertTrue(((ActiveMQDestination) tempQueue).isCreated());
 
          tempQueue.delete();
 
-         //assertFalse(((ActiveMQDestination) tempQueue).isCreated());
+         assertFalse(((ActiveMQDestination) tempQueue).isCreated());
 
          assertFalse(conn.containsTemporaryQueue(SimpleString.toSimpleString(tempQueue.getQueueName())));
       } finally {

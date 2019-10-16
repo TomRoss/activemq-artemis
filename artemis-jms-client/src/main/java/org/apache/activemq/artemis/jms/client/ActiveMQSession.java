@@ -813,6 +813,8 @@ public class ActiveMQSession implements QueueSession, TopicSession {
 
          connection.addTemporaryQueue(simpleAddress);
 
+         queue.setCreated(true);
+
          return queue;
       } catch (ActiveMQException e) {
          throw JMSExceptionHelper.convertFromActiveMQException(e);
