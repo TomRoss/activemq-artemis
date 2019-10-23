@@ -1719,11 +1719,11 @@ public class JMSServerManagerImpl implements JMSServerManager, ActivateCallback 
       @Override
       public void callback(SimpleString address, SimpleString queueName) throws Exception {
          Queue queue = server.locateQueue(address);
-         Collection<Binding> bindings = server.getPostOffice().getBindingsForAddress(address).getBindings();
-
+         //Collection<Binding> bindings = server.getPostOffice().getBindingsForAddress(address).getBindings();
+         Collection<Binding> bindings = server.getPostOffice().lookupBindingsForAddress(address).getBindings();
          AddressSettings settings = server.getAddressSettingsRepository().getMatch(address.toString());
-
-         if (address.toString().startsWith(ActiveMQDestination.JMS_TOPIC_ADDRESS_PREFIX) && settings.isAutoDeleteJmsTopics() && bindings.size() == 1 && queue != null && queue.isAutoCreated()) {
+         if (address.toString().startsWith(ActiveMQDestination.JMS_TOPIC_ADDRESS_PREFIX) && settings.isAutoDeleteJmsTopics() && (bindings !=null && bindings.size() == 1) && queue != null && queue.isAutoCreated()) {
+         //if (address.toString().startsWith(ActiveMQDestination.JMS_TOPIC_ADDRESS_PREFIX) && settings.isAutoDeleteJmsTopics() && bindings.size() == 1 && queue != null && queue.isAutoCreated()) {
             try {
                destroyTopic(address.toString().substring(ActiveMQDestination.JMS_TOPIC_ADDRESS_PREFIX.length()));
             } catch (IllegalStateException e) {
