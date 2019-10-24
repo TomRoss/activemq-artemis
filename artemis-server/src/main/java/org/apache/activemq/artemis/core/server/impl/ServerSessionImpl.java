@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.apache.activemq.artemis.core.postoffice.Bindings;
 import org.apache.activemq.artemis.api.core.ActiveMQException;
 import org.apache.activemq.artemis.api.core.ActiveMQIOErrorException;
 import org.apache.activemq.artemis.api.core.ActiveMQIllegalStateException;
@@ -647,7 +648,10 @@ public class ServerSessionImpl implements ServerSession, FailureListener {
          remotingConnection.removeFailureListener(cleaner);
       }
 
-      if (postOffice.getBindingsForAddress(queueToDelete).getBindings().size() == 0) {
+
+      Bindings bindingToDelete = postOffice.lookupBindingsForAddress(queueToDelete);
+
+      if (bindingToDelete != null && postOffice.lookupBindingsForAddress(queueToDelete).getBindings().size() == 0) {
           targetAddressInfos.remove(queueToDelete);
       }
    }

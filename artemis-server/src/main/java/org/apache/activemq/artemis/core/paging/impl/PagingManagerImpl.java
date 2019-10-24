@@ -262,8 +262,7 @@ public final class PagingManagerImpl implements PagingManager {
          if (store != null) {
             store.stop();
             store.destroy();
-
-            logger.info("tomr::destroying store " + store.getAddress().toString() + " stores.size=" + stores.size() + " after remove");
+            
             for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
                logger.info(ste);
             }
@@ -377,8 +376,6 @@ public final class PagingManagerImpl implements PagingManager {
             }
             stores.put(address, store);
 
-            logger.info("tomr::address added to stores " + address.toString() + " stores.size=" + stores.size() + " after adding");
-            
             for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
                logger.info(ste);
             }

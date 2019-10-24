@@ -40,6 +40,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.activemq.artemis.core.postoffice.Bindings;
 import org.apache.activemq.artemis.api.core.ActiveMQException;
 import org.apache.activemq.artemis.api.core.DiscoveryGroupConfiguration;
 import org.apache.activemq.artemis.api.core.SimpleString;
@@ -1719,11 +1720,10 @@ public class JMSServerManagerImpl implements JMSServerManager, ActivateCallback 
       @Override
       public void callback(SimpleString address, SimpleString queueName) throws Exception {
          Queue queue = server.locateQueue(address);
-         //Collection<Binding> bindings = server.getPostOffice().getBindingsForAddress(address).getBindings();
-         Collection<Binding> bindings = server.getPostOffice().lookupBindingsForAddress(address).getBindings();
+
+         Bindings bindings = server.getPostOffice().lookupBindingsForAddress(address);
          AddressSettings settings = server.getAddressSettingsRepository().getMatch(address.toString());
-         if (address.toString().startsWith(ActiveMQDestination.JMS_TOPIC_ADDRESS_PREFIX) && settings.isAutoDeleteJmsTopics() && (bindings !=null && bindings.size() == 1) && queue != null && queue.isAutoCreated()) {
-         //if (address.toString().startsWith(ActiveMQDestination.JMS_TOPIC_ADDRESS_PREFIX) && settings.isAutoDeleteJmsTopics() && bindings.size() == 1 && queue != null && queue.isAutoCreated()) {
+         if (address.toString().startsWith(ActiveMQDestination.JMS_TOPIC_ADDRESS_PREFIX) && settings.isAutoDeleteJmsTopics() && (bindings != null && bindings.getBindings().size() == 1) && queue != null && queue.isAutoCreated()) {
             try {
                destroyTopic(address.toString().substring(ActiveMQDestination.JMS_TOPIC_ADDRESS_PREFIX.length()));
             } catch (IllegalStateException e) {
