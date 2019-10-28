@@ -262,10 +262,6 @@ public final class PagingManagerImpl implements PagingManager {
          if (store != null) {
             store.stop();
             store.destroy();
-            
-            for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-               logger.info(ste);
-            }
          }
       } finally {
          syncLock.readLock().unlock();
@@ -375,10 +371,6 @@ public final class PagingManagerImpl implements PagingManager {
                store.disableCleanup();
             }
             stores.put(address, store);
-
-            for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-               logger.info(ste);
-            }
          }
          return store;
       } finally {

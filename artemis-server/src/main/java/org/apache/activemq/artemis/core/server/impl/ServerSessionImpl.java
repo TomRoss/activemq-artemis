@@ -651,7 +651,7 @@ public class ServerSessionImpl implements ServerSession, FailureListener {
 
       Bindings bindingToDelete = postOffice.lookupBindingsForAddress(queueToDelete);
 
-      if (bindingToDelete != null && postOffice.lookupBindingsForAddress(queueToDelete).getBindings().size() == 0) {
+      if (bindingToDelete == null || postOffice.lookupBindingsForAddress(queueToDelete).getBindings().size() == 0) {
           targetAddressInfos.remove(queueToDelete);
       }
    }
