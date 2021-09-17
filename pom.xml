@@ -20,12 +20,12 @@
    <groupId>org.apache.activemq</groupId>
    <artifactId>artemis-pom</artifactId>
    <packaging>pom</packaging>
-   <version>2.18.0</version>
+   <version>2.18.0.redhat-00008</version>
 
    <parent>
       <groupId>org.apache</groupId>
       <artifactId>apache</artifactId>
-      <version>23</version>
+      <version>23.0.0.redhat-00004</version>
       <relativePath>org.apache:apache</relativePath>
    </parent>
 
@@ -80,25 +80,25 @@
       <retryTests>false</retryTests>
       <logging.config>logging.properties</logging.config>
 
-      <activemq-artemis-native-version>1.0.2</activemq-artemis-native-version>
+      <activemq-artemis-native-version>1.0.2.redhat-00002</activemq-artemis-native-version>
       <karaf.version>4.3.1</karaf.version>
       <pax.exam.version>4.13.4</pax.exam.version>
-      <commons.config.version>2.7</commons.config.version>
-      <commons.lang.version>3.12.0</commons.lang.version>
-      <commons.logging.version>1.2</commons.logging.version>
+      <commons.config.version>2.7.0.redhat-00001</commons.config.version>
+      <commons.lang.version>3.12.0.redhat-00001</commons.lang.version>
+      <commons.logging.version>1.2.0.redhat-3</commons.logging.version>
       <activemq5-version>5.11.0.redhat-630495</activemq5-version>
       <apache.derby.version>10.11.1.1</apache.derby.version>
-      <commons.beanutils.version>1.9.4</commons.beanutils.version>
-      <commons.dbcp2.version>2.7.0</commons.dbcp2.version>
-      <commons.pool2.version>2.7.0</commons.pool2.version>
-      <commons.collections.version>3.2.2</commons.collections.version>
-      <commons.text.version>1.8</commons.text.version>
-      <commons.io.version>2.10.0</commons.io.version>
+      <commons.beanutils.version>1.9.4.redhat-00002</commons.beanutils.version>
+      <commons.dbcp2.version>2.7.0.redhat-00001</commons.dbcp2.version>
+      <commons.pool2.version>2.7.0.redhat-00001</commons.pool2.version>
+      <commons.collections.version>3.2.2.redhat-2</commons.collections.version>
+      <commons.text.version>1.8.0.redhat-00001</commons.text.version>
+      <commons.io.version>2.10.0.redhat-00001</commons.io.version>
       <fuse.mqtt.client.version>1.16</fuse.mqtt.client.version>
-      <guava.version>30.1-jre</guava.version>
-      <jboss.logging.version>3.4.2.Final</jboss.logging.version>
-      <jetty.version>9.4.43.v20210629</jetty.version>
-      <jgroups.version>3.6.13.Final</jgroups.version>
+      <guava.version>30.1.0.jre-redhat-00003</guava.version>
+      <jboss.logging.version>3.4.2.Final-redhat-00002</jboss.logging.version>
+      <jetty.version>9.4.43.v20210629-redhat-00001</jetty.version>
+      <jgroups.version>3.6.13.Final-redhat-2</jgroups.version>
       <errorprone.version>2.6.0</errorprone.version>
       <maven.enforcer.plugin.version>3.0.0-M3</maven.enforcer.plugin.version>
       <maven.bundle.plugin.version>5.1.2</maven.bundle.plugin.version>
@@ -106,66 +106,66 @@
       <sevntu.checks.version>1.39.0</sevntu.checks.version>
       <checkstyle.version>8.43</checkstyle.version>
       <mockito.version>3.11.2</mockito.version>
-      <jctools.version>2.1.2</jctools.version>
-      <netty.version>4.1.66.Final</netty.version>
-      <curator.version>5.2.0</curator.version>
-      <zookeeper.version>3.6.3</zookeeper.version>
+      <jctools.version>2.1.2.redhat-00003</jctools.version>
+      <netty.version>4.1.66.Final-redhat-00001</netty.version>
+      <curator.version>5.2.0.redhat-00001</curator.version>
+      <zookeeper.version>3.6.3.redhat-00001</zookeeper.version>
 
       <!-- this is basically for tests -->
       <netty-tcnative-version>2.0.40.Final</netty-tcnative-version>
-      <proton.version>0.33.8</proton.version>
+      <proton.version>0.33.8.redhat-00001</proton.version>
       <resteasy.version>3.15.0.Final</resteasy.version>
-      <slf4j.version>1.7.22</slf4j.version>
-      <tomcat.servlet.version>8.0.36</tomcat.servlet.version>
-      <qpid.jms.version>0.55.0</qpid.jms.version>
-      <johnzon.version>0.9.5</johnzon.version>
-      <hawtbuff.version>1.11</hawtbuff.version>
-      <jb.logmanager.version>2.1.10.Final</jb.logmanager.version>
-      <jb.slf4j-jboss-logmanager.version>1.0.4.GA</jb.slf4j-jboss-logmanager.version>
-      <version.org.wildfly.common.wildfly-common>1.5.2.Final</version.org.wildfly.common.wildfly-common>
-      <airlift.version>0.8</airlift.version>
-      <jakarta.activation-api.version>1.2.2</jakarta.activation-api.version>
-      <jakarta.annotation-api.version>1.3.5</jakarta.annotation-api.version>
+      <slf4j.version>1.7.22.redhat-2</slf4j.version>
+      <tomcat.servlet.version>8.0.36.redhat-45</tomcat.servlet.version>
+      <qpid.jms.version>0.55.0.redhat-00005</qpid.jms.version>
+      <johnzon.version>0.9.5.redhat-1</johnzon.version>
+      <hawtbuff.version>1.11.0.redhat-2</hawtbuff.version>
+      <jb.logmanager.version>2.1.10.Final-redhat-00001</jb.logmanager.version>
+      <jb.slf4j-jboss-logmanager.version>1.0.4.GA-redhat-00001</jb.slf4j-jboss-logmanager.version>
+      <version.org.wildfly.common.wildfly-common>1.5.2.Final-redhat-00002</version.org.wildfly.common.wildfly-common>
+      <airlift.version>0.8.0.redhat-00001</airlift.version>
+      <jakarta.activation-api.version>1.2.2.redhat-00001</jakarta.activation-api.version>
+      <jakarta.annotation-api.version>1.3.5.redhat-00003</jakarta.annotation-api.version>
       <jakarta.ejb-api.version>3.2.6</jakarta.ejb-api.version>
-      <jakarta.enterprise.cdi-api.version>2.0.2</jakarta.enterprise.cdi-api.version>
-      <jakarta.inject-api.version>1.0.3</jakarta.inject-api.version>
-      <jakarta.jms-api.version>2.0.3</jakarta.jms-api.version>
-      <jakarta.json-api.version>1.1.6</jakarta.json-api.version>
+      <jakarta.enterprise.cdi-api.version>2.0.2.redhat-00003</jakarta.enterprise.cdi-api.version>
+      <jakarta.inject-api.version>1.0.3.redhat-00001</jakarta.inject-api.version>
+      <jakarta.jms-api.version>2.0.3.redhat-00001</jakarta.jms-api.version>
+      <jakarta.json-api.version>1.1.6.redhat-00003</jakarta.json-api.version>
       <jakarta.management.j2ee-api.version>1.1.4</jakarta.management.j2ee-api.version>
       <jakarta.resource-api.version>1.7.4</jakarta.resource-api.version>
-      <jakarta.security.auth.message-api.version>1.1.3</jakarta.security.auth.message-api.version>
-      <jakarta.transaction-api.version>1.3.3</jakarta.transaction-api.version>
-      <jakarta.ws.rs-api.version>2.1.6</jakarta.ws.rs-api.version>
-      <jakarta.xml.bind-api.version>2.3.3</jakarta.xml.bind-api.version>
-      <weld.version>2.4.0.Final</weld.version>
+      <jakarta.security.auth.message-api.version>1.1.3.redhat-00003</jakarta.security.auth.message-api.version>
+      <jakarta.transaction-api.version>1.3.3.redhat-00002</jakarta.transaction-api.version>
+      <jakarta.ws.rs-api.version>2.1.6.redhat-00001</jakarta.ws.rs-api.version>
+      <jakarta.xml.bind-api.version>2.3.3.redhat-00001</jakarta.xml.bind-api.version>
+      <weld.version>2.4.0.Final-redhat-1</weld.version>
       <arquillian-weld-embedded.version>2.0.0.Beta3</arquillian-weld-embedded.version>
       <owb.version>1.7.0</owb.version>
       <arquillian.version>1.1.11.Final</arquillian.version>
       <servicemix.json-1.1.spec.version>2.9.0</servicemix.json-1.1.spec.version>
       <version.org.jacoco>0.8.6</version.org.jacoco>
       <version.org.jacoco.plugin>0.8.6</version.org.jacoco.plugin>
-      <version.micrometer>1.6.3</version.micrometer>
+      <version.micrometer>1.6.3.redhat-00001</version.micrometer>
       <hamcrest.version>2.1</hamcrest.version>
       <junit.version>4.13.2</junit.version>
       <surefire.version>2.22.2</surefire.version>
-      <version.jaxb.runtime>2.3.3</version.jaxb.runtime>
+      <version.jaxb.runtime>2.3.3.redhat-00001</version.jaxb.runtime>
       <paho.client.mqttv3.version>1.2.5</paho.client.mqttv3.version>
       <!-- for JakrtaEE -->
       <version.batavia>1.0.5.Final</version.batavia>
 
       <!-- used on tests -->
       <groovy.version>2.5.10</groovy.version>
-      <vertx.version>3.9.4</vertx.version>
+      <vertx.version>3.9.4.redhat-00001</vertx.version>
 
       <owasp.version>6.1.0</owasp.version>
       <spring.version>5.1.7.RELEASE</spring.version>
 
-      <activemq.version.versionName>${project.version}</activemq.version.versionName>
+      <activemq.version.versionName>2.18.0.redhat-00008</activemq.version.versionName>
       <activemq.version.majorVersion>1</activemq.version.majorVersion>
       <activemq.version.minorVersion>0</activemq.version.minorVersion>
       <activemq.version.microVersion>0</activemq.version.microVersion>
       <activemq.version.incrementingVersion>131,130,129,128,127,126,125,124,123,122</activemq.version.incrementingVersion>
-      <activemq.version.versionTag>${project.version}</activemq.version.versionTag>
+      <activemq.version.versionTag>2.18.0.redhat-00008</activemq.version.versionTag>
       <ActiveMQ-Version>${project.version}(${activemq.version.incrementingVersion})</ActiveMQ-Version>
 
       <skipUnitTests>true</skipUnitTests>
@@ -217,7 +217,7 @@
       <directory-jdbm2-version>2.0.0-M1</directory-jdbm2-version>
 
       <netty-transport-native-epoll-classifier>linux-x86_64</netty-transport-native-epoll-classifier>
-      <netty-transport-native-kqueue-classifier></netty-transport-native-kqueue-classifier>
+      <netty-transport-native-kqueue-classifier />
 
       <!-- Ignore failed tests by default because there are "known" failures in the full test-suite.
            This will be set to false for the "fast-tests" profile as none of those tests should fail. -->
@@ -369,14 +369,14 @@
          <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging-processor</artifactId>
-            <version>2.2.0.Final</version>
+            <version>2.2.0.Final-redhat-00001</version>
             <optional>true</optional>
             <!-- License: LGPL-->
          </dependency>
          <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging-annotations</artifactId>
-            <version>2.2.0.Final</version>
+            <version>2.2.0.Final-redhat-00001</version>
             <scope>provided</scope>
             <optional>true</optional>
             <!-- License: Apache 2.0-->
@@ -433,21 +433,15 @@
 
          <!-- ### Run Time Dependencies: MUST NOT INCLUDE CAT X LICENSES ###-->
          <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons.io.version}</version>
-         </dependency>
-         <dependency>
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
             <version>${jakarta.inject-api.version}</version>
-            <!-- License: EPL 2.0 -->
          </dependency>
          <dependency>
             <groupId>org.fusesource.hawtbuf</groupId>
             <artifactId>hawtbuf</artifactId>
             <version>${hawtbuff.version}</version>
-            <!-- License: Apache 2.0 -->
+            <!-- License: EPL 2.0 -->
          </dependency>
          <dependency>
             <groupId>org.jboss.logging</groupId>
@@ -468,27 +462,27 @@
             <!-- License: Apache 2.0 -->
          </dependency>
          <dependency>
-             <groupId>org.wildfly.common</groupId>
-             <artifactId>wildfly-common</artifactId>
-             <version>${version.org.wildfly.common.wildfly-common}</version>
-             <!-- License: Apache 2.0 -->
+            <groupId>org.wildfly.common</groupId>
+            <artifactId>wildfly-common</artifactId>
+            <version>${version.org.wildfly.common.wildfly-common}</version>
+            <!-- License: Apache 2.0 -->
          </dependency>
          <dependency>
-            <groupId>net.java.dev.javacc</groupId>
-            <artifactId>javacc</artifactId>
-            <version>4.0</version>
-            <!-- License: BSD -->
+             <groupId>net.java.dev.javacc</groupId>
+             <artifactId>javacc</artifactId>
+             <version>4.0</version>
+             <!-- License: Apache 2.0 -->
          </dependency>
          <dependency>
             <groupId>jakarta.jms</groupId>
             <artifactId>jakarta.jms-api</artifactId>
             <version>${jakarta.jms-api.version}</version>
-            <!-- License: EPL 2.0 -->
-        </dependency>
-        <dependency>
-           <groupId>jakarta.transaction</groupId>
-           <artifactId>jakarta.transaction-api</artifactId>
-           <version>${jakarta.transaction-api.version}</version>
+            <!-- License: BSD -->
+         </dependency>
+         <dependency>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
+            <version>${jakarta.transaction-api.version}</version>
             <!-- License: EPL 2.0 -->
         </dependency>
         <dependency>
@@ -515,22 +509,28 @@
            <version>${jakarta.resource-api.version}</version>
             <!-- License: EPL 2.0 -->
         </dependency>
+        <dependency>
+           <groupId>commons-collections</groupId>
+           <artifactId>commons-collections</artifactId>
+           <version>${commons.collections.version}</version>
+            <!-- License: EPL 2.0 -->
+        </dependency>
          <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>${commons.collections.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+            <version>${commons.config.version}</version>
             <!-- License: Apache 2.0 -->
-         </dependency>
-         <dependency>
-             <groupId>org.apache.commons</groupId>
-             <artifactId>commons-configuration2</artifactId>
-             <version>${commons.config.version}</version>
-             <!-- License: Apache 2.0 -->
          </dependency>
          <dependency>
              <groupId>org.apache.commons</groupId>
              <artifactId>commons-lang3</artifactId>
              <version>${commons.lang.version}</version>
+             <!-- License: Apache 2.0 -->
+         </dependency>
+         <dependency>
+             <groupId>org.slf4j</groupId>
+             <artifactId>slf4j-simple</artifactId>
+             <version>${slf4j.version}</version>
              <!-- License: Apache 2.0 -->
          </dependency>
 
@@ -539,42 +539,36 @@
          <!-- ## Examples Dependencies ## -->
          <dependency>
              <groupId>org.slf4j</groupId>
-             <artifactId>slf4j-simple</artifactId>
+             <artifactId>slf4j-nop</artifactId>
              <version>${slf4j.version}</version>
          </dependency>
          <dependency>
-             <groupId>org.slf4j</groupId>
-             <artifactId>slf4j-nop</artifactId>
-             <version>${slf4j.version}</version>
+             <groupId>org.jgroups</groupId>
+             <artifactId>jgroups</artifactId>
+             <version>${jgroups.version}</version>
          </dependency>
          <!-- ## End Examples Dependencies ## -->
 
          <!--needed to compile the bootstrap jar-->
          <dependency>
-            <groupId>org.jgroups</groupId>
-            <artifactId>jgroups</artifactId>
-            <version>${jgroups.version}</version>
-            <!-- License: Apache 2.0 -->
-         </dependency>
-         <dependency>
             <groupId>io.airlift</groupId>
             <artifactId>airline</artifactId>
             <version>${airlift.version}</version>
             <exclusions>
-               <exclusion>
-                  <groupId>javax.inject</groupId>
-                  <artifactId>javax.inject</artifactId>
-               </exclusion>
-            </exclusions>
+          <exclusion>
+            <artifactId>javax.inject</artifactId>
+            <groupId>javax.inject</groupId>
+          </exclusion>
+        </exclusions>
             <!-- License: Apache 2.0 -->
          </dependency>
-         <!--needed to compile transport jar-->
          <dependency>
             <groupId>org.jctools</groupId>
             <artifactId>jctools-core</artifactId>
             <version>${jctools.version}</version>
             <!-- License: Apache 2.0 -->
          </dependency>
+         <!--needed to compile transport jar-->
          <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
@@ -654,15 +648,15 @@
             <artifactId>activemq-client</artifactId>
             <version>${activemq5-version}</version>
             <exclusions>
-               <exclusion>
-                  <groupId>org.apache.geronimo.specs</groupId>
-                  <artifactId>geronimo-jms_1.1_spec</artifactId>
-               </exclusion>
-               <exclusion>
-                  <groupId>org.apache.geronimo.specs</groupId>
-                  <artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
-               </exclusion>
-            </exclusions>
+          <exclusion>
+            <artifactId>geronimo-jms_1.1_spec</artifactId>
+            <groupId>org.apache.geronimo.specs</groupId>
+          </exclusion>
+          <exclusion>
+            <artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
+            <groupId>org.apache.geronimo.specs</groupId>
+          </exclusion>
+        </exclusions>
             <!-- License: Apache 2.0 -->
          </dependency>
          <dependency>
@@ -672,25 +666,25 @@
             <!-- License: Apache 2.0 -->
          </dependency>
          <dependency>
-           <groupId>org.slf4j</groupId>
-           <artifactId>slf4j-api</artifactId>
-           <version>${slf4j.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <!-- License: Apache 2.0 -->
+         </dependency>
+         <dependency>
+           <groupId>org.apache.johnzon</groupId>
+           <artifactId>johnzon-core</artifactId>
+           <version>${johnzon.version}</version>
            <!-- License: MIT -->
          </dependency>
          <!-- json -->
          <dependency>
-            <groupId>org.apache.johnzon</groupId>
-            <artifactId>johnzon-core</artifactId>
-            <version>${johnzon.version}</version>
-         </dependency>
-
-         <!--needed for the rest support-->
-         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
             <version>${resteasy.version}</version>
-            <!-- License: Apache 2.0 -->
          </dependency>
+
+         <!--needed for the rest support-->
          <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxb-provider</artifactId>
@@ -709,32 +703,30 @@
             <version>${resteasy.version}</version>
             <!-- License: Apache 2.0 -->
          </dependency>
-
-         <!-- ## Jetty web Dependencies ##-->
          <dependency>
             <groupId>org.eclipse.jetty.aggregate</groupId>
             <artifactId>jetty-all</artifactId>
             <version>${jetty.version}</version>
-            <type>jar</type>
             <classifier>uber</classifier>
-            <!-- License: (Joint): Apache 2.0 & EPL 1.0 -->
-        </dependency>
+            <!-- License: Apache 2.0 -->
+         </dependency>
+
+         <!-- ## Jetty web Dependencies ##-->
          <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>
             <version>${tomcat.servlet.version}</version>
-         </dependency>
-         <!-- ## End Jetty Wed Dependencies ## -->
-
-         <!-- for URL reflection. Using Populate on URI Factory at activemq-commons -->
+            <type>jar</type>
+            <!-- License: (Joint): Apache 2.0 & EPL 1.0 -->
+        </dependency>
          <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>${commons.beanutils.version}</version>
-            <!-- License: Apache 2.0 -->
          </dependency>
+         <!-- ## End Jetty Wed Dependencies ## -->
 
-         <!-- needed by commons-beanutils-->
+         <!-- for URL reflection. Using Populate on URI Factory at activemq-commons -->
          <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
@@ -742,12 +734,15 @@
             <!-- License: Apache 2.0 -->
          </dependency>
 
-         <!-- needed by artemis-selector -->
+         <!-- needed by commons-beanutils-->
          <dependency>
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis</artifactId>
             <version>2.0.2</version>
+            <!-- License: Apache 2.0 -->
          </dependency>
+
+         <!-- needed by artemis-selector -->
          <dependency>
             <groupId>xalan</groupId>
             <artifactId>xalan</artifactId>
@@ -758,38 +753,38 @@
             <artifactId>commons-io</artifactId>
             <version>${commons.io.version}</version>
          </dependency>
-
-         <!-- needed by artemis-jdbc-store -->
          <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <version>${commons.dbcp2.version}</version>
-            <!-- license Apache 2 -->
          </dependency>
-         <!-- used by commons-dbcp2 -->
+
+         <!-- needed by artemis-jdbc-store -->
          <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
             <version>${commons.pool2.version}</version>
-            <!-- license Apache 2 -->
             <scope>runtime</scope>
+            <!-- license Apache 2 -->
          </dependency>
-
-         <!-- Needed for Micrometer -->
+         <!-- used by commons-dbcp2 -->
          <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-core</artifactId>
             <version>${version.micrometer}</version>
-            <optional>true</optional> <!-- keep optional as "true" at least until micrometer supports OSGi -->
+            <optional>true</optional>
             <!-- license Apache 2 -->
          </dependency>
 
+         <!-- Needed for Micrometer -->
          <dependency>
             <groupId>org.apache.openwebbeans</groupId>
             <artifactId>openwebbeans-impl</artifactId>
             <version>${owb.version}</version>
-            <scope>test</scope>
+            <scope>test</scope> <!-- keep optional as "true" at least until micrometer supports OSGi -->
+            <!-- license Apache 2 -->
          </dependency>
+
          <dependency>
             <groupId>org.apache.openwebbeans</groupId>
             <artifactId>openwebbeans-spi</artifactId>
@@ -833,10 +828,10 @@
             <scope>test</scope>
          </dependency>
          <dependency>
-             <groupId>org.jacoco</groupId>
-             <artifactId>org.jacoco.ant</artifactId>
-             <version>${version.org.jacoco}</version>
-             <scope>test</scope>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.ant</artifactId>
+            <version>${version.org.jacoco}</version>
+            <scope>test</scope>
          </dependency>
          <dependency>
              <groupId>org.jacoco</groupId>
@@ -845,19 +840,18 @@
              <scope>test</scope>
          </dependency>
          <dependency>
-            <groupId>jakarta.enterprise</groupId>
-            <artifactId>jakarta.enterprise.cdi-api</artifactId>
-            <version>${jakarta.enterprise.cdi-api.version}</version>
-            <scope>provided</scope>
+             <groupId>jakarta.enterprise</groupId>
+             <artifactId>jakarta.enterprise.cdi-api</artifactId>
+             <version>${jakarta.enterprise.cdi-api.version}</version>
+             <scope>provided</scope>
          </dependency>
-         <!--  OSGi support -->
          <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
             <version>6.0.0</version>
             <scope>provided</scope>
-            <!-- License: Apache 2.0 -->
          </dependency>
+         <!--  OSGi support -->
          <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>osgi.cmpn</artifactId>
@@ -875,13 +869,14 @@
             <groupId>jakarta.security.auth.message</groupId>
             <artifactId>jakarta.security.auth.message-api</artifactId>
             <version>${jakarta.security.auth.message-api.version}</version>
+            <!-- License: Apache 2.0 -->
          </dependency>
-         <!-- Curator Zookeeper RI -->
          <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
             <version>${curator.version}</version>
          </dependency>
+         <!-- Curator Zookeeper RI -->
          <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
@@ -902,6 +897,7 @@
             <artifactId>zookeeper-jute</artifactId>
             <version>${zookeeper.version}</version>
          </dependency>
+         
       </dependencies>
 
    </dependencyManagement>
@@ -934,7 +930,6 @@
                <plugin>
                   <groupId>org.apache.maven.plugins</groupId>
                   <artifactId>maven-compiler-plugin</artifactId>
-                  <configuration combine.self="override" />
                </plugin>
                <plugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -1522,7 +1517,7 @@
             <plugin>
                <groupId>org.apache.activemq</groupId>
                <artifactId>artemis-maven-plugin</artifactId>
-               <version>${project.version}</version>
+               <version>2.18.0.redhat-00008</version>
             </plugin>
             <plugin>
                <groupId>org.jacoco</groupId>
@@ -1776,67 +1771,6 @@
       </plugins>
    </build>
 
-   <reporting>
-      <plugins>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>${maven.checkstyle.plugin.version}</version>
-            <configuration>
-               <configLocation>${activemq.basedir}/etc/checkstyle.xml</configLocation>
-               <suppressionsLocation>${activemq.basedir}/etc/checkstyle-suppressions.xml</suppressionsLocation>
-               <failsOnError>false</failsOnError>
-            </configuration>
-         </plugin>
-         <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <version>2.5.2</version>
-            <configuration>
-               <excludeFilterFile>${user.dir}/etc/findbugs-exclude.xml</excludeFilterFile>
-               <effort>Max</effort>
-               <failOnError>false</failOnError>
-            </configuration>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <configuration>
-               <minmemory>128m</minmemory>
-               <maxmemory>1024m</maxmemory>
-               <quiet>false</quiet>
-               <!-- XXX FIXME 'aggregate' is deprecated -->
-               <aggregate>true</aggregate>
-               <excludePackageNames>com.restfully.*:org.jboss.resteasy.examples.*:org.jboss.resteasy.tests.*
-               </excludePackageNames>
-            </configuration>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>2.7</version>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-report-plugin</artifactId>
-            <version>2.14.1</version>
-         </plugin>
-         <plugin>
-            <groupId>org.owasp</groupId>
-            <artifactId>dependency-check-maven</artifactId>
-            <version>${owasp.version}</version>
-            <reportSets>
-               <reportSet>
-                  <reports>
-                     <report>aggregate</report>
-                  </reports>
-               </reportSet>
-            </reportSets>
-         </plugin>
-
-      </plugins>
-   </reporting>
-
    <!--
      un comment this session here to validate repository releases.
      <repositories>
@@ -1852,3 +1786,6 @@
    </repositories> -->
 
 </project>
+<!--
+Modified by POM Manipulation Extension for Maven 4.5 ( SHA: 698c5e7b )
+-->
